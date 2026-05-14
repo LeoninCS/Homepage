@@ -1992,11 +1992,95 @@ function usePressedKeys() {
   return keysRef;
 }
 
+function getIsTouchExperience() {
+  return (
+    typeof window !== 'undefined' &&
+    (window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(hover: none)').matches || window.innerWidth <= 720)
+  );
+}
+
 function MuseumExperience() {
   const mountRef = React.useRef(null);
   const keysRef = usePressedKeys();
   const [selectedExhibit, setSelectedExhibit] = React.useState(null);
+  const [nearbyExhibit, setNearbyExhibit] = React.useState(null);
+  const [isTouchExperience, setIsTouchExperience] = React.useState(getIsTouchExperience);
   const [webglUnavailable, setWebglUnavailable] = React.useState(false);
+  const selectedExhibitRef = React.useRef(null);
+  const nearbyExhibitRef = React.useRef(null);
+  const suppressedTriggerRef = React.useRef(null);
+  const isTouchExperienceRef = React.useRef(getIsTouchExperience());
+
+  const updateSelectedExhibit = React.useCallback((exhibit) => {
+    const currentId = selectedExhibitRef.current?.id ?? null;
+    const nextId = exhibit?.id ?? null;
+    if (currentId === nextId) {
+      return;
+    }
+    selectedExhibitRef.current = exhibit;
+    setSelectedExhibit(exhibit);
+  }, []);
+
+  const updateNearbyExhibit = React.useCallback((exhibit) => {
+    const currentId = nearbyExhibitRef.current?.id ?? null;
+    const nextId = exhibit?.id ?? null;
+    if (currentId === nextId) {
+      return;
+    }
+    nearbyExhibitRef.current = exhibit;
+    setNearbyExhibit(exhibit);
+  }, []);
+
+  const openNearbyExhibit = React.useCallback(() => {
+    const exhibit = nearbyExhibitRef.current;
+    if (exhibit) {
+      suppressedTriggerRef.current = null;
+      updateSelectedExhibit(exhibit);
+    }
+  }, [updateSelectedExhibit]);
+
+  const closeSelectedExhibit = React.useCallback(() => {
+    const exhibit = selectedExhibitRef.current || nearbyExhibitRef.current;
+    if (exhibit) {
+      suppressedTriggerRef.current = exhibit.id;
+    }
+    updateSelectedExhibit(null);
+  }, [updateSelectedExhibit]);
+
+  React.useEffect(() => {
+    const updateTouchExperience = () => {
+      const next = getIsTouchExperience();
+      isTouchExperienceRef.current = next;
+      setIsTouchExperience(next);
+    };
+    const pointerQuery = window.matchMedia('(pointer: coarse)');
+    const hoverQuery = window.matchMedia('(hover: none)');
+    const addQueryListener = (query) => {
+      if (query.addEventListener) {
+        query.addEventListener('change', updateTouchExperience);
+      } else {
+        query.addListener(updateTouchExperience);
+      }
+    };
+    const removeQueryListener = (query) => {
+      if (query.removeEventListener) {
+        query.removeEventListener('change', updateTouchExperience);
+      } else {
+        query.removeListener(updateTouchExperience);
+      }
+    };
+
+    updateTouchExperience();
+    addQueryListener(pointerQuery);
+    addQueryListener(hoverQuery);
+    window.addEventListener('resize', updateTouchExperience);
+
+    return () => {
+      removeQueryListener(pointerQuery);
+      removeQueryListener(hoverQuery);
+      window.removeEventListener('resize', updateTouchExperience);
+    };
+  }, []);
 
   React.useEffect(() => {
     const mount = mountRef.current;
@@ -2008,7 +2092,8 @@ function MuseumExperience() {
     scene.background = new THREE.Color(0x15110f);
     scene.fog = new THREE.Fog(0x15110f, 26, 72);
 
-    const camera = new THREE.PerspectiveCamera(54, mount.clientWidth / mount.clientHeight, 0.1, 160);
+    const getCameraFov = () => (mount.clientWidth <= 720 || isTouchExperienceRef.current ? 62 : 54);
+    const camera = new THREE.PerspectiveCamera(getCameraFov(), mount.clientWidth / mount.clientHeight, 0.1, 160);
     let renderer;
 
     try {
@@ -2062,9 +2147,8 @@ function MuseumExperience() {
     const exhibitMeshes = exhibits.map((exhibit) => createExhibit(scene, exhibit, materials, cameraBlockers));
 
     const cameraRaycaster = new THREE.Raycaster();
-    const pointer = { dragging: false, lastX: 0, lastY: 0, moved: 0 };
+    const pointer = { dragging: false, id: null, lastX: 0, lastY: 0, moved: 0 };
     let activeTriggerId = null;
-    let suppressedTriggerId = null;
 
     let yaw = Math.PI;
     let pitch = 0.5;
@@ -2087,7 +2171,12 @@ function MuseumExperience() {
       ) && isClearOfObstacles(position, obstacles);
 
     const handlePointerDown = (event) => {
+      if (selectedExhibitRef.current) {
+        return;
+      }
+      event.preventDefault();
       pointer.dragging = true;
+      pointer.id = event.pointerId;
       pointer.lastX = event.clientX;
       pointer.lastY = event.clientY;
       pointer.moved = 0;
@@ -2098,6 +2187,10 @@ function MuseumExperience() {
       if (!pointer.dragging) {
         return;
       }
+      if (pointer.id !== null && event.pointerId !== pointer.id) {
+        return;
+      }
+      event.preventDefault();
       const dx = event.clientX - pointer.lastX;
       const dy = event.clientY - pointer.lastY;
       pointer.moved += Math.abs(dx) + Math.abs(dy);
@@ -2108,20 +2201,40 @@ function MuseumExperience() {
     };
 
     const handlePointerUp = (event) => {
+      const wasDragging = pointer.dragging && (pointer.id === null || event.pointerId === pointer.id);
+      if (!wasDragging) {
+        return;
+      }
+      const isTap = pointer.moved < 10;
       pointer.dragging = false;
-      renderer.domElement.releasePointerCapture?.(event.pointerId);
+      pointer.id = null;
+      try {
+        renderer.domElement.releasePointerCapture?.(event.pointerId);
+      } catch {
+        // Pointer capture can already be released by the browser during gesture cancellation.
+      }
+      if (isTap && isTouchExperienceRef.current && nearbyExhibitRef.current && !selectedExhibitRef.current) {
+        suppressedTriggerRef.current = null;
+        updateSelectedExhibit(nearbyExhibitRef.current);
+      }
     };
 
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
-        suppressedTriggerId = activeTriggerId;
+        suppressedTriggerRef.current = selectedExhibitRef.current?.id || nearbyExhibitRef.current?.id || activeTriggerId;
         activeTriggerId = null;
-        setSelectedExhibit(null);
+        updateSelectedExhibit(null);
+      }
+      if ((event.key === 'Enter' || event.key === ' ') && nearbyExhibitRef.current && !selectedExhibitRef.current) {
+        event.preventDefault();
+        suppressedTriggerRef.current = null;
+        updateSelectedExhibit(nearbyExhibitRef.current);
       }
     };
 
     const handleResize = () => {
       camera.aspect = mount.clientWidth / mount.clientHeight;
+      camera.fov = getCameraFov();
       camera.updateProjectionMatrix();
       renderer.setSize(mount.clientWidth, mount.clientHeight);
     };
@@ -2145,12 +2258,14 @@ function MuseumExperience() {
       right.set(Math.cos(yaw), 0, -Math.sin(yaw));
       velocity.set(0, 0, 0);
 
-      if (keys.has('w') || keys.has('arrowup')) velocity.add(forward);
-      if (keys.has('s') || keys.has('arrowdown')) velocity.sub(forward);
-      if (keys.has('a') || keys.has('arrowleft')) velocity.sub(right);
-      if (keys.has('d') || keys.has('arrowright')) velocity.add(right);
-      if (keys.has('q')) yaw += delta * 1.6;
-      if (keys.has('e')) yaw -= delta * 1.6;
+      if (!(isTouchExperienceRef.current && selectedExhibitRef.current)) {
+        if (keys.has('w') || keys.has('arrowup')) velocity.add(forward);
+        if (keys.has('s') || keys.has('arrowdown')) velocity.sub(forward);
+        if (keys.has('a') || keys.has('arrowleft')) velocity.sub(right);
+        if (keys.has('d') || keys.has('arrowright')) velocity.add(right);
+        if (keys.has('q')) yaw += delta * 1.6;
+        if (keys.has('e')) yaw -= delta * 1.6;
+      }
 
       if (velocity.lengthSq() > 0) {
         velocity.normalize().multiplyScalar(6.8 * delta);
@@ -2322,17 +2437,23 @@ function MuseumExperience() {
       }
 
       if (steppedExhibit) {
-        if (suppressedTriggerId && suppressedTriggerId !== steppedExhibit.id) {
-          suppressedTriggerId = null;
+        updateNearbyExhibit(steppedExhibit);
+        if (suppressedTriggerRef.current && suppressedTriggerRef.current !== steppedExhibit.id) {
+          suppressedTriggerRef.current = null;
         }
-        if (steppedExhibit.id !== activeTriggerId && suppressedTriggerId !== steppedExhibit.id) {
+        if (steppedExhibit.id !== activeTriggerId) {
           activeTriggerId = steppedExhibit.id;
-          setSelectedExhibit(steppedExhibit);
+        }
+        if (!isTouchExperienceRef.current && suppressedTriggerRef.current !== steppedExhibit.id) {
+          updateSelectedExhibit(steppedExhibit);
         }
       } else if (activeTriggerId) {
         activeTriggerId = null;
-        suppressedTriggerId = null;
-        setSelectedExhibit(null);
+        suppressedTriggerRef.current = null;
+        updateNearbyExhibit(null);
+        updateSelectedExhibit(null);
+      } else {
+        updateNearbyExhibit(null);
       }
 
       renderer.render(scene, camera);
@@ -2352,15 +2473,33 @@ function MuseumExperience() {
       renderer.dispose();
       mount.removeChild(renderer.domElement);
     };
-  }, [keysRef]);
+  }, [keysRef, updateNearbyExhibit, updateSelectedExhibit]);
 
-  const setTouchKey = (key, pressed) => {
+  const setTouchKey = React.useCallback((key, pressed) => {
     if (pressed) {
       keysRef.current.add(key);
     } else {
       keysRef.current.delete(key);
     }
-  };
+  }, [keysRef]);
+
+  const touchKeyProps = (key) => ({
+    onPointerDown: (event) => {
+      event.preventDefault();
+      event.currentTarget.setPointerCapture?.(event.pointerId);
+      setTouchKey(key, true);
+    },
+    onPointerUp: (event) => {
+      event.preventDefault();
+      event.currentTarget.releasePointerCapture?.(event.pointerId);
+      setTouchKey(key, false);
+    },
+    onPointerCancel: (event) => {
+      event.currentTarget.releasePointerCapture?.(event.pointerId);
+      setTouchKey(key, false);
+    },
+    onPointerLeave: () => setTouchKey(key, false),
+  });
 
   return (
     <main className="game-shell">
@@ -2390,31 +2529,53 @@ function MuseumExperience() {
         </div>
       </header>
 
-      <div className="control-hint">
-        <span>WASD</span>
-        <span>拖拽视角</span>
-        <span>走到光圈</span>
-        <span>进入房间</span>
-      </div>
+      {!webglUnavailable && (
+        <>
+          <div className="control-hint">
+            <span>{isTouchExperience ? '方向键' : 'WASD'}</span>
+            <span>{isTouchExperience ? '拖动空白处' : '拖拽视角'}</span>
+            <span>{isTouchExperience ? '靠近后查看' : '走到光圈'}</span>
+            <span>进入房间</span>
+          </div>
 
-      <div className="touch-pad" aria-label="Touch movement controls">
-        <button onPointerDown={() => setTouchKey('w', true)} onPointerUp={() => setTouchKey('w', false)}>
-          ↑
+          <div className="touch-pad" aria-label="Touch movement controls">
+            <button type="button" aria-label="向前" {...touchKeyProps('w')}>
+              ↑
+            </button>
+            <button type="button" aria-label="向左" {...touchKeyProps('a')}>
+              ←
+            </button>
+            <button type="button" aria-label="向后" {...touchKeyProps('s')}>
+              ↓
+            </button>
+            <button type="button" aria-label="向右" {...touchKeyProps('d')}>
+              →
+            </button>
+          </div>
+
+          <div className="touch-look-pad" aria-label="Touch camera controls">
+            <button type="button" aria-label="向左转" {...touchKeyProps('q')}>
+              ↶
+            </button>
+            <button type="button" aria-label="向右转" {...touchKeyProps('e')}>
+              ↷
+            </button>
+          </div>
+        </>
+      )}
+
+      {!webglUnavailable && isTouchExperience && nearbyExhibit && !selectedExhibit && (
+        <button type="button" className="inspect-button" onClick={openNearbyExhibit}>
+          查看 {nearbyExhibit.title}
         </button>
-        <button onPointerDown={() => setTouchKey('a', true)} onPointerUp={() => setTouchKey('a', false)}>
-          ←
-        </button>
-        <button onPointerDown={() => setTouchKey('s', true)} onPointerUp={() => setTouchKey('s', false)}>
-          ↓
-        </button>
-        <button onPointerDown={() => setTouchKey('d', true)} onPointerUp={() => setTouchKey('d', false)}>
-          →
-        </button>
-      </div>
+      )}
 
       {selectedExhibit && (
         <div className="detail-overlay">
           <article className="detail-card">
+            <button type="button" className="detail-close" aria-label="关闭详情" onClick={closeSelectedExhibit}>
+              ×
+            </button>
             <p>{selectedExhibit.subtitle}</p>
             <h2>{selectedExhibit.detailsTitle}</h2>
             {selectedExhibit.details.map((line) => (
