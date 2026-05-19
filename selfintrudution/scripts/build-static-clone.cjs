@@ -1,20 +1,32 @@
 const fs = require("fs");
 const path = require("path");
-const { personalizeAssetDir } = require("./personalize-original-bundle.cjs");
+const { spawnSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
-const publicDir = path.join(root, "public");
 const distDir = path.join(root, "dist");
-const entryHtml = path.join(root, "index.html");
-
-personalizeAssetDir(path.join(publicDir, "assets"));
 
 fs.rmSync(distDir, { recursive: true, force: true });
-fs.mkdirSync(distDir, { recursive: true });
-fs.cpSync(publicDir, distDir, { recursive: true });
 
-for (const route of ["index.html", "about", "gallery", "contact"]) {
-  fs.copyFileSync(entryHtml, path.join(distDir, route));
+const result = spawnSync(
+  process.execPath,
+  [path.join(root, "node_modules", "vite", "bin", "vite.js"), "build"],
+  {
+    cwd: root,
+    stdio: "inherit",
+    env: {
+      ...process.env,
+      LEONINCS_STATIC_BUILD: "1",
+    },
+  },
+);
+
+if (result.status !== 0) {
+  process.exit(result.status || 1);
+}
+
+const indexHtml = path.join(distDir, "index.html");
+for (const route of ["about", "gallery", "contact"]) {
+  fs.copyFileSync(indexHtml, path.join(distDir, route));
 }
 
 console.log("Static LeoninCS clone built in dist/");
