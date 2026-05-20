@@ -7,12 +7,12 @@ const defaultAssetDir = path.join(root, "public", "assets");
 const projects = [
   {
     id: "backend-internship",
-    title: "后端开发实习",
+    title: "CompliK Admin 实习",
     front: "/textures/gallery/bioprzod.webp",
     painted: "/textures/gallery/bioprzod_painted.webp",
-    url: "mailto:xianchaoqian@foxmail.com",
+    url: "https://github.com/labring/CompliK",
     description:
-      "后端开发实习经历覆盖接口开发、日志排查、指标观察、问题拆解、测试补充和服务稳定性建设。",
+      "2026 年 3 月至今在环界云计算 / Sealos 系统组参与 Sealos 集群合规系统 Admin 开发、Admin 与 CompliK 适配、CI 搭建、多端分析插件、ProcScan 二进制分析和系统迭代维护。",
     techStack: [
       "/textures/gallery/jslogo.webp",
       "/textures/gallery/firebaselogo.webp",
@@ -37,12 +37,12 @@ const projects = [
   },
   {
     id: "feed-system",
-    title: "Feed System",
+    title: "GCFeed",
     front: "/textures/gallery/timberkittyprzod.webp",
     painted: "/textures/gallery/timberkittyprzod_painted.webp",
-    url: "https://github.com/LeoninCS/feedsystem_video_go",
+    url: "https://github.com/LeoninCS/GCFeed",
     description:
-      "视频 Feed 流系统是 Go 后端工程项目，覆盖内容流接口、分页链路、Redis 缓存、消息队列和高并发服务稳定性。",
+      "GCFeed 是 GoClubFeed 短视频场景的 Go 后端项目，覆盖 Gin、GORM、Redis、MQ、MySQL、内容流接口、分页链路和高并发服务稳定性。",
     techStack: [
       "/textures/gallery/jslogo.webp",
       "/textures/gallery/htmllogo.webp",
@@ -52,12 +52,12 @@ const projects = [
   },
   {
     id: "agent-flow",
-    title: "Agent Flow",
+    title: "SDD Agent Engine",
     front: "/textures/gallery/youngmultiprzod.webp",
     painted: "/textures/gallery/youngmultiprzod_painted.webp",
-    url: "https://github.com/LeoninCS/multi-agent-workflow-assistant",
+    url: "https://github.com/LeoninCS/SDD-Agent-WorkflowEngine",
     description:
-      "多智能体工作流助手基于 LangGraph 思路，聚焦任务编排、工具调用、状态流转和 Agent 工程化落地。",
+      "SDD-Agent-WorkflowEngine 聚焦本地 Agent 工作流编排、任务拆解、工具调用、状态流转和 Agent 工程化落地。",
     techStack: [
       "/textures/gallery/reactlogo.webp",
       "/textures/gallery/tailwindlogo.webp",
@@ -67,12 +67,12 @@ const projects = [
   },
   {
     id: "sealos-aiops",
-    title: "Sealos AIOps",
+    title: "CompliK",
     front: "/textures/gallery/bioprzod.webp",
     painted: "/textures/gallery/bioprzod_painted.webp",
-    url: "https://github.com/labring/sealos",
+    url: "https://github.com/labring/CompliK",
     description:
-      "Sealos AIOps 与集群合规实践围绕 Kubernetes、巡检、合规扫描、自动化运维和云原生基础设施展开。",
+      "CompliK 围绕 Sealos 集群合规、Kubernetes 巡检、合规扫描、自动化分析和云原生基础设施展开。",
     techStack: [
       "/textures/gallery/htmllogo.webp",
       "/textures/gallery/csslogo.webp",
@@ -146,22 +146,42 @@ const studioItems = [
   {
     id: "competition-004",
     platform: "blog",
-    title: "河南大学 ACM 集训队",
-    description: "在 ACM 训练体系中积累团队协作、赛时分工、题目筛选和压力下交付能力。",
+    title: "CCPC 河南省赛金牌",
+    description: "2026 第八届 CCPC 河南省大学生程序设计竞赛金牌，队伍 O（1）。",
     thumbnail: null,
-    url: "https://icpc.global/",
-    date: "团队训练",
-    readTime: "ACM",
+    url: "https://ccpc.io/",
+    date: "2026",
+    readTime: "金牌",
   },
   {
     id: "competition-005",
     platform: "blog",
-    title: "ICPC 现场经验",
-    description: "具备 ICPC 现场赛经验，熟悉赛时节奏、榜单压力、罚时控制和团队协作。",
+    title: "天梯赛个人国二",
+    description: "2026 第十一届中国高校计算机大赛-团体程序设计天梯赛个人全国二等奖。",
     thumbnail: null,
-    url: "https://icpc.global/",
-    date: "现场竞赛",
-    readTime: "ICPC",
+    url: "https://gplt.patest.cn/",
+    date: "2026",
+    readTime: "国二",
+  },
+  {
+    id: "competition-006",
+    platform: "blog",
+    title: "蓝桥杯省一",
+    description: "2025 第十六届蓝桥杯全国软件和信息技术专业人才大赛省赛一等奖。",
+    thumbnail: null,
+    url: "https://dasai.lanqiao.cn/",
+    date: "2025",
+    readTime: "省一",
+  },
+  {
+    id: "competition-007",
+    platform: "blog",
+    title: "百度之星初赛铜奖",
+    description: "2025 第二十一届百度之星程序设计大赛初赛铜奖。",
+    thumbnail: null,
+    url: "https://star.baidu.com/",
+    date: "2025",
+    readTime: "铜奖",
   },
   {
     id: "achievement-001",
@@ -199,7 +219,7 @@ const aboutRecords = {
     items: [
       {
         label: "献超前 / LeoninCS",
-        date: "后端开发实习生",
+        date: "Agent 开发方向",
         image: "/textures/about/SOTDAYYOUNGMULTIGSAP.webp",
         url: "mailto:xianchaoqian@foxmail.com",
       },
@@ -210,14 +230,14 @@ const aboutRecords = {
         url: "https://www.henu.edu.cn/",
       },
       {
-        label: "杭州，中国",
-        date: "后端 / 云原生 / AI Agent",
+        label: "当前工作地：杭州",
+        date: "学校在开封",
         image: "/textures/about/SOTDAYYOUNGMULTIORPETRON.webp",
         url: "mailto:xianchaoqian@foxmail.com",
       },
       {
         label: "求职方向",
-        date: "后端开发实习",
+        date: "Agent 开发",
         image: "/textures/about/SOTDAYYOUNGMULTIDESIGNNOMINESS.webp",
         url: "mailto:xianchaoqian@foxmail.com",
       },
@@ -262,14 +282,14 @@ const aboutRecords = {
     title: "技术方向",
     items: [
       {
-        label: "Go / Python",
-        date: "后端工程与脚本工具",
+        label: "Go / Gin / GORM",
+        date: "后端工程与 Web 开发",
         image: "/textures/about/SOTDAYYOUNGMULTIGSAP.webp",
         url: "https://github.com/LeoninCS",
       },
       {
         label: "Kubernetes / Sealos",
-        date: "云原生平台实践",
+        date: "云原生实践",
         image: "/textures/about/SOTDAYYOUNGMULTICSSWINNER.webp",
         url: "https://github.com/labring/sealos",
       },
@@ -280,10 +300,10 @@ const aboutRecords = {
         url: "https://github.com/LeoninCS",
       },
       {
-        label: "LangGraph / Agent Workflow",
+        label: "AI Agent / SDD",
         date: "AI Agent 工程化",
         image: "/textures/about/SOTDAYYOUNGMULTIDESIGNNOMINESS.webp",
-        url: "https://github.com/LeoninCS/multi-agent-workflow-assistant",
+        url: "https://github.com/LeoninCS/SDD-Agent-WorkflowEngine",
       },
     ],
     platformConfig: { label: "方向", color: "#1a1a1a", icon: "方向" },
@@ -332,8 +352,8 @@ const moduleDoors = [
 
 const moduleDoorDescriptions = {
   简介: "姓名、学校、专业、联系方式和求职方向",
-  经历: "后端实习、工程项目、开源协作和技术栈",
-  竞赛: "LeetCode、Codeforces、ACM、ICPC 和长期训练",
+  经历: "CompliK 实习、GCFeed、SDD Agent Engine、GoClub 和技术栈",
+  竞赛: "CCPC、天梯赛、蓝桥杯、百度之星、LeetCode 和 Codeforces",
   爱好: "音乐 HiFi、股票观察、摄影、骑行和生活记录",
 };
 
@@ -344,10 +364,12 @@ const textReplacements = [
   ["(ITOM)", "(河南大学 · 软件工程)"],
   ["LEONINCS", "献超前 / LeoninCS"],
   ["(XIANCHAO QIAN)", "(河南大学 · 软件工程)"],
-  ['"Building reliable backend systems', '"后端开发实习 · 云原生平台'],
-  ['with agents and cloud-native craft"', 'AI Agent 工程 · 杭州"'],
-  ["Crafting digital experiences", "后端开发实习生"],
-  ["that push creative boundaries", "Go / Kubernetes / AI Agent"],
+  ['"Building reliable backend systems', '"Agent 开发 · Go / Gin / GORM'],
+  ['with agents and cloud-native craft"', '云原生 · Sealos / CompliK"'],
+  ["Crafting digital experiences", "Agent 开发方向"],
+  ["后端开发实习生", "Agent 开发方向"],
+  ["that push creative boundaries", "Go / Gin / GORM / AI Agent"],
+  ["后端开发实习 · 云原生平台", "Agent 开发 · Go / Gin / GORM"],
   ["Portfolio Contact", "联系方式"],
   ["Open Link ↗", "打开链接"],
   ["EXPLORER", "献超前 / LeoninCS"],
@@ -426,8 +448,9 @@ const textReplacements = [
   ["Skip to accessible navigation", "跳转到导航"],
   ["Portfolio rooms", "简历房间"],
   ["作品集房间", "简历房间"],
-  ["ITom — Creative Developer Portfolio", "献超前 — 后端开发实习生简历"],
-  ["LeoninCS — 后端工程作品集", "献超前 — 后端开发实习生简历"],
+  ["ITom — Creative Developer Portfolio", "献超前 — Agent 开发简历"],
+  ["LeoninCS — 后端工程作品集", "献超前 — Agent 开发简历"],
+  ["献超前 — 后端开发实习生简历", "献超前 — Agent 开发简历"],
   ["Portfolio Navigation", "简历导航"],
   ["作品集导航", "简历导航"],
   [
@@ -442,10 +465,11 @@ const textReplacements = [
   ["About — My story, skills, and journey", "简介 — 姓名、学校、专业、联系方式"],
   ["The Gallery — My projects and work", "经历 — 实习经历、项目经历和技术栈"],
   ["Contact — Get in touch with me", "爱好 — 音乐、股票、摄影和骑行"],
-  ["The Studio — Technologies and experience", "竞赛 — 奖项成就、算法训练和 ACM"],
+  ["The Studio — Technologies and experience", "竞赛 — CCPC、天梯赛、蓝桥杯、百度之星"],
   ["关于 — 经历、技能和长期方向", "简介 — 姓名、学校、专业、联系方式"],
   ["联系 — GitHub、邮箱和社交入口", "爱好 — 音乐、股票、摄影和骑行"],
-  ["工作台 — 技术笔记和摄影展览", "竞赛 — 奖项成就、算法训练和 ACM"],
+  ["工作台 — 技术笔记和摄影展览", "竞赛 — CCPC、天梯赛、蓝桥杯、百度之星"],
+  ["竞赛 — 奖项成就、算法训练和 ACM", "竞赛 — CCPC、天梯赛、蓝桥杯、百度之星"],
   ["You are in the ", "当前位置："],
   [" room.", " 房间。"],
   ["Entered ", "已进入 "],
@@ -464,7 +488,7 @@ const textReplacements = [
   ["My Projects", "经历清单"],
   [
     "Browse through my portfolio projects displayed on paper cards. Click on a project card to see details and visit the live site.",
-    "浏览纸张卡片上的后端实习、GoClub、Feed System、Agent Flow 和 Sealos AIOps。",
+    "浏览纸张卡片上的 CompliK 实习、GCFeed、SDD Agent Engine、CompliK 和 GoClub。",
   ],
   ["Contact Me", "爱好记录"],
   ["联系我", "爱好记录"],
@@ -478,11 +502,15 @@ const textReplacements = [
   ],
   [
     "Explore my experience and skills on rotating monitors. Click a monitor to read detailed information about my work.",
-    "旋转屏幕里展示 LeetCode、Codeforces、ACM、ICPC 和长期训练。",
+    "旋转屏幕里展示 CCPC、天梯赛、蓝桥杯、百度之星、LeetCode 和 Codeforces。",
   ],
   [
     "旋转屏幕里展示技术笔记、工程复盘、竞赛记录和摄影展览。",
+    "旋转屏幕里展示 CCPC、天梯赛、蓝桥杯、百度之星、LeetCode 和 Codeforces。",
+  ],
+  [
     "旋转屏幕里展示 LeetCode、Codeforces、ACM、ICPC 和长期训练。",
+    "旋转屏幕里展示 CCPC、天梯赛、蓝桥杯、百度之星、LeetCode 和 Codeforces。",
   ],
   ["Quick Navigation", "快速导航"],
   ["Go to About", "前往简介"],
@@ -540,31 +568,37 @@ const textReplacements = [
   ["/textures/about/方向.webp", "/textures/about/SOTY.webp"],
   ["/textures/about/方向_painted.webp", "/textures/about/SOTY_painted.webp"],
   ["JOURNEY", "成长路径"],
-  ["My path so far...", "河南大学 / 后端实习 / 云原生"],
+  ["My path so far...", "河南大学开封 / Sealos 实习 / Agent 开发"],
+  ["河南大学 / 后端实习 / 云原生", "河南大学开封 / Sealos 实习 / Agent 开发"],
   ["2025-NOW", "实习阶段"],
-  ["2023-NOW", "ACM 训练"],
+  ["2023-NOW", "算法训练"],
   ["SKILLS", "技术方向"],
-  ["Technologies I love working with", "Go / Python / Kubernetes / Sealos / Redis / MQ"],
+  ["Technologies I love working with", "Go / Gin / GORM / Kubernetes / Sealos / AI Agent"],
+  ["Go / Python / Kubernetes / Sealos / Redis / MQ", "Go / Gin / GORM / Kubernetes / Sealos / AI Agent"],
   ['label:"React"', 'label:"Go"'],
-  ['label:"Three.js"', 'label:"Python"'],
-  ['label:"GSAP"', 'label:"Kubernetes"'],
-  ['label:"JavaScript"', 'label:"Sealos"'],
-  ['label:"CSS"', 'label:"Redis"'],
-  ['label:"Next.js"', 'label:"MQ"'],
-  ['label:"HTML"', 'label:"LangGraph"'],
+  ['label:"Three.js"', 'label:"Gin"'],
+  ['label:"GSAP"', 'label:"GORM"'],
+  ['label:"JavaScript"', 'label:"Kubernetes"'],
+  ['label:"CSS"', 'label:"Sealos"'],
+  ['label:"Next.js"', 'label:"Redis"'],
+  ['label:"HTML"', 'label:"MQ"'],
   ['label:"Git"', 'label:"Raft"'],
-  ['label:"Figma"', 'label:"GitHub"'],
+  ['label:"Figma"', 'label:"CompliK"'],
   ['label:"Firebase"', 'label:"AI Agent"'],
   ["/fonts/CabinSketch-Bold.ttf", "/fonts/ArialUnicode.ttf"],
   ["/fonts/CabinSketch-Regular.ttf", "/fonts/ArialUnicode.ttf"],
   ["/fonts/RubikScribble-Regular.ttf", "/fonts/ArialUnicode.ttf"],
+  [
+    "https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.woff",
+    "/fonts/ArialUnicode.ttf",
+  ],
   [
     '{char:"I",baseX:-.95,splitDir:-1.6,delay:0},{char:"T",baseX:-.43,splitDir:-.6,delay:0},{char:"O",baseX:.23,splitDir:.6,delay:0},{char:"M",baseX:.95,splitDir:1.8,delay:0}',
     '{char:"献",baseX:-.72,splitDir:-1.2,delay:0},{char:"超",baseX:0,splitDir:0,delay:0},{char:"前",baseX:.72,splitDir:1.2,delay:0}',
   ],
   [
     '{text:"<",baseX:-.85,splitDir:-1.5,delay:0},{text:"creative",baseX:-.4,splitDir:-.8,delay:0},{text:"developer",baseX:.4,splitDir:.8,delay:0},{text:"/>",baseX:.85,splitDir:1.5,delay:0}',
-    '{text:"LeoninCS",baseX:-.48,splitDir:-.6,delay:0},{text:"后端开发实习生",baseX:.5,splitDir:.6,delay:0}',
+    '{text:"LeoninCS",baseX:-.48,splitDir:-.6,delay:0},{text:"Agent开发",baseX:.5,splitDir:.6,delay:0}',
   ],
   ["Close achievements", "关闭成就"],
   ['label:"Click a door to enter",title:"Explorer"', 'label:"点击大门进入",title:"探索者"'],
@@ -674,7 +708,7 @@ function rewriteExperienceBundle(source) {
     .replaceAll('children:"简历 — 个人信息、联系方式、实习和奖项"', 'children:"简介 — 姓名、学校、专业、联系方式"')
     .replaceAll('children:"项目 — 工程作品与开源实践"', 'children:"经历 — 实习经历、项目经历和技术栈"')
     .replaceAll('children:"联系 — 邮箱、GitHub 和社交入口"', 'children:"爱好 — 音乐、股票、摄影和骑行"')
-    .replaceAll('children:"记录 — 技术栈、项目复盘和摄影展览"', 'children:"竞赛 — 奖项成就、算法训练和 ACM"')
+    .replaceAll('children:"记录 — 技术栈、项目复盘和摄影展览"', 'children:"竞赛 — CCPC、天梯赛、蓝桥杯、百度之星"')
     .replaceAll('"aria-label":"简历房间内容"', '"aria-label":"简介房间内容"')
     .replaceAll('"aria-label":"项目房间内容"', '"aria-label":"经历房间内容"')
     .replaceAll('"aria-label":"联系房间内容"', '"aria-label":"爱好房间内容"')
@@ -684,9 +718,9 @@ function rewriteExperienceBundle(source) {
     .replaceAll('children:"联系方式"', 'children:"爱好记录"')
     .replaceAll('children:"记录"', 'children:"竞赛"')
     .replaceAll('children:"这里展示姓名、联系方式、实习经历、奖项竞赛和技术栈。"', 'children:"这里展示姓名、学校、专业、联系方式、所在地和求职方向。"')
-    .replaceAll('children:"浏览纸张卡片上的工程项目，点击卡片查看细节和项目链接。"', 'children:"浏览纸张卡片上的后端实习、GoClub、Feed System、Agent Flow 和 Sealos AIOps。"')
+    .replaceAll('children:"浏览纸张卡片上的工程项目，点击卡片查看细节和项目链接。"', 'children:"浏览纸张卡片上的 CompliK 实习、GCFeed、SDD Agent Engine、CompliK 和 GoClub。"')
     .replaceAll('children:"漂浮木桶里放着邮箱、GitHub、Bilibili、X 和 Instagram 入口。"', 'children:"漂浮木桶里放着音乐、股票观察、摄影、骑行和生活记录入口。"')
-    .replaceAll('children:"旋转屏幕里展示简历重点、项目复盘、技术记录和摄影展览。"', 'children:"旋转屏幕里展示 LeetCode、Codeforces、ACM、ICPC 和长期训练。"')
+    .replaceAll('children:"旋转屏幕里展示简历重点、项目复盘、技术记录和摄影展览。"', 'children:"旋转屏幕里展示 CCPC、天梯赛、蓝桥杯、百度之星、LeetCode 和 Codeforces。"')
     .replaceAll('children:"前往简历"', 'children:"前往简介"')
     .replaceAll('children:"前往项目"', 'children:"前往经历"')
     .replaceAll('children:"前往联系"', 'children:"前往爱好"')

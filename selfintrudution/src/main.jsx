@@ -9,29 +9,29 @@ import './styles.css';
 const projects = [
   {
     label: 'Feed',
-    title: '视频 Feed 流系统',
-    caption: 'Go 后端项目，关注内容流接口、游标分页、Redis 缓存、消息队列和高并发服务稳定性。',
+    title: 'GCFeed',
+    caption: 'GoClubFeed 面向短视频场景，围绕内容生产、分发、消费与治理链路展开，技术栈包含 Go、Gin、GORM、Redis、MQ 和 MySQL。',
     image: '/picture/46-icpc-wuhan-regional-01.jpg',
-    href: 'https://github.com/LeoninCS/feedsystem_video_go',
+    href: 'https://github.com/LeoninCS/GCFeed',
   },
   {
     label: 'Agent',
-    title: 'Agent Flow',
-    caption: '多智能体工作流助手，围绕工具调用、状态流转、任务编排和 Agent 工程化落地展开。',
+    title: 'SDD Agent Engine',
+    caption: '基于 SDD 的本地 Agent 工作流引擎，面向 VS Code、RAG、多 Agent 编排、自动门禁和文档回写闭环。',
     image: '/picture/35-programming-contest-team-photo.jpg',
-    href: 'https://github.com/LeoninCS/multi-agent-workflow-assistant',
+    href: 'https://github.com/LeoninCS/SDD-Agent-WorkflowEngine',
   },
   {
     label: 'Cloud',
-    title: 'Sealos AIOps',
-    caption: '云原生平台实践，覆盖 Kubernetes 巡检、合规扫描、自动化运维和平台工程。',
+    title: 'CompliK',
+    caption: 'Sealos 系统组实习项目，参与集群合规系统 Admin 开发、系统适配、CI、多端分析插件和 ProcScan 二进制分析。',
     image: '/picture/40-illuminated-arch-bridge-night.jpg',
-    href: 'https://github.com/labring/sealos',
+    href: 'https://github.com/labring/CompliK',
   },
   {
     label: 'Open Source',
     title: 'GoClub',
-    caption: 'Go 后端开源社区项目，沉淀内容组织、协作工具和技术分享。',
+    caption: 'Hugo + GitHub Pages + Cloudflare 搭建的 Go 后端知识库，整理面经、八股、资源索引、项目学习和技术博客。',
     image: '/picture/42-icpc-shenzhen-invitational-01.jpg',
     href: 'https://goclub.space/',
   },
@@ -40,30 +40,47 @@ const projects = [
 const profileRows = [
   ['姓名', '献超前 / Xianchao Qian'],
   ['技术 ID', 'LeoninCS'],
-  ['学校', '河南大学 软件工程本科在读'],
-  ['所在地', '杭州，中国'],
-  ['方向', '后端开发实习 · Go · Kubernetes · AI Agent'],
+  ['学校', '河南大学 软件工程本科在读 · 开封'],
+  ['当前工作地', '杭州，中国'],
+  ['求职方向', 'Agent 开发'],
+  ['技术方向', 'Go · Gin · GORM · 云原生 · AI Agent'],
 ];
 
 const internshipCards = [
   {
     eyebrow: '实习经历',
-    title: '后端开发实习经历，围绕工程落地展开。',
-    text: '覆盖接口开发、日志排查、指标观察、问题拆解、测试补充和服务稳定性建设。',
-    note: '关键词：接口、稳定性、可观测性、测试补充。',
-    visualTitle: 'Backend Intern',
-    visualText: '接口开发 / 日志排查 / 稳定性建设',
+    title: 'Sealos 系统组实习，参与 CompliK 集群合规系统建设。',
+    text: '负责 Admin 面板全栈开发、Admin 与 CompliK 适配、CompliK CI 搭建、多端分析插件、ProcScan 二进制分析和系统迭代维护。',
+    note: '关键词：Admin、CI、合规扫描、ProcScan、系统适配。',
+    visualTitle: 'CompliK Admin',
+    visualText: 'Admin / CI / ProcScan / Plugin',
   },
 ];
 
 const competitionCards = [
   {
     eyebrow: '竞赛奖项',
-    title: '算法训练和竞赛记录可以直接验证。',
+    title: 'OJ 训练记录稳定可查。',
     text: 'LeetCode 2100，Codeforces 1653，累计 1500+ Problems，河南大学 ACM 集训队，具备 ICPC 现场经验。',
-    note: '长期训练记录是后端工程能力的底座。',
+    note: '长期算法训练支撑复杂度分析、边界覆盖和实现稳定性。',
     visualTitle: 'LeetCode 2100',
     visualText: 'Codeforces 1653 / 1500+ Problems',
+  },
+  {
+    eyebrow: '省赛与国赛',
+    title: 'CCPC 河南省赛金牌和天梯赛个人国二。',
+    text: '2026 年第八届 CCPC 河南省大学生程序设计竞赛金牌，O（1）团队；2026 年第十一届中国高校计算机大赛-团体程序设计天梯赛个人全国二等奖。',
+    note: '团队赛与个人赛共同体现赛时分工、题目筛选和稳定交付。',
+    visualTitle: 'CCPC Gold',
+    visualText: 'GPLT National Second Prize',
+  },
+  {
+    eyebrow: '补充奖项',
+    title: '蓝桥杯省一和百度之星初赛铜奖。',
+    text: '2025 年第十六届蓝桥杯全国软件和信息技术专业人才大赛省赛一等奖，2025 年第二十一届百度之星程序设计大赛初赛铜奖。',
+    note: '多类型竞赛经历覆盖算法基本功和短时编码能力。',
+    visualTitle: 'Lanqiao / Baidu Star',
+    visualText: '省一 / 初赛铜奖',
   },
 ];
 
@@ -71,9 +88,9 @@ const hobbyCards = [
   {
     eyebrow: '骑行',
     title: '长距离骑行，让身体和判断力一起在线。',
-    text: '骑行累计 10000+ 公里，习惯用路线规划、体能分配和复盘记录管理长期目标。',
+    text: '骑行累计 10000+ 公里，代表路线包括环太湖、环海南岛，习惯用路线规划、体能分配和复盘记录管理长期目标。',
     visualTitle: 'Cycling 10000+ km',
-    visualText: '路线规划 / 长期训练 / 复盘记录',
+    visualText: '环太湖 / 环海南岛 / 复盘记录',
     note: '长期主义从路上开始，也会回到工程节奏里。',
   },
   {
@@ -85,12 +102,20 @@ const hobbyCards = [
     note: '照片是个人页面里的真实质感来源。',
   },
   {
-    eyebrow: '理财',
-    title: '理财观察连接商业模式和长期决策。',
-    text: '关注投资逻辑、资产配置、商业模式和公司基本面，用长期视角训练信息判断。',
+    eyebrow: '音乐与 HiFi',
+    title: 'R&B、Jazz、Hip-Hop 和 Pop 是长期听感入口。',
+    text: '喜欢方大同、Kendrick Lamar、SZA、Frank Ocean、J. Cole 等，也关注 FiiO KA13、Sennheiser IE 200、声场和解析。',
+    visualTitle: 'Music / HiFi',
+    visualText: 'R&B / Jazz / Hip-Hop / Pop',
+    note: '把听感当作一种审美训练。',
+  },
+  {
+    eyebrow: '投资观察',
+    title: '投资观察连接商业模式和长期决策。',
+    text: '关注 KO、NVDA、TSM、AAPL、MSFT、GOOGL、MU、CVX，以及指数、Crypto、现金流、技术趋势和流动性周期。',
     visualTitle: 'Finance Notes',
-    visualText: '投资观察 / 商业模式 / 长期决策',
-    note: '用结构化记录减少情绪化决策。',
+    visualText: '商业模式 / 现金流 / 技术趋势',
+    note: '用结构化记录训练信息判断。',
   },
 ];
 
@@ -213,7 +238,8 @@ function useScrollEffects() {
 
     const update = (nextScroll) => {
       const scrollY = nextScroll ?? lenis.animatedScroll ?? window.scrollY;
-      const heroProgress = clamp(scrollY / 1269, 0, 1.2);
+      const heroHeight = document.querySelector('.hero')?.offsetHeight || 1269;
+      const heroProgress = clamp(scrollY / heroHeight, 0, 1.2);
       const viewportHeight = window.innerHeight;
 
       document.body.classList.toggle('is-scrolled', scrollY > 16);
@@ -284,7 +310,7 @@ function Nav() {
         <a href="#socials">社媒</a>
       </div>
       <div className="nav-actions">
-        <a href="https://github.com/LeoninCS">GitHub</a>
+        <a href="https://github.com/LeoninCS" rel="noreferrer" target="_blank">GitHub</a>
         <a href="mailto:xianchaoqian@foxmail.com">联系我</a>
       </div>
     </nav>
@@ -311,11 +337,11 @@ function ResumeMockup({ compact = false }) {
       <section className="mock-panel">
         <div className="mock-avatar">X</div>
         <h3>献超前 / LeoninCS</h3>
-        <p>后端开发实习 · Go · 云原生 · AI Agent</p>
-        <button>查看联系方式</button>
+        <p>Agent 开发 · Go · Gin · GORM · 云原生</p>
+        <a className="mock-button" href={`mailto:${contactEmail}`}>查看联系方式</a>
         <small>
-          河南大学软件工程本科在读 → 后端实习经历 → LeetCode 2100 / Codeforces 1653 →
-          视频 Feed 流系统 / GoClub / Agent Flow / Sealos AIOps
+          河南大学软件工程本科在读（开封） → Sealos 系统组实习 → LeetCode 2100 / Codeforces 1653 →
+          CompliK / GCFeed / SDD Agent Engine / GoClub
         </small>
       </section>
     </div>
@@ -327,9 +353,13 @@ function Hero() {
     <section id="hero" className="hero">
       <div className="hero-bg hills-back" />
       <div className="hero-copy reveal">
-        <h1>LeoninCS’s Profile Page</h1>
+        <h1>
+          <span>LeoninCS</span>
+          <span className="hero-separator">/</span>
+          <span>Agent 开发方向简历</span>
+        </h1>
         <p>
-          展示信息、实习、项目、竞赛、爱好、联系邮箱和社媒账号。
+          献超前的个人主页：Agent 开发求职方向、Sealos 系统组实习、Go 后端项目、算法竞赛记录、摄影和骑行。
         </p>
         <a className="cta" href="mailto:xianchaoqian@foxmail.com">联系我</a>
       </div>
@@ -346,9 +376,9 @@ function About() {
   const sectionRef = useRef(null);
   const [activeLine, setActiveLine] = useState(0);
   const lines = [
-    '我是献超前，技术 ID 是 LeoninCS，河南大学软件工程本科在读，常驻杭州，求职方向是后端开发实习。',
-    '我的工程主线围绕 Go 后端、云原生平台、Kubernetes、Sealos、AI Agent 和分布式系统展开。',
-    '除了工程经历，我也长期记录骑行、摄影、理财观察和商业模式研究，让个人页面保留真实的生活纹理。',
+    '我是献超前，技术 ID 是 LeoninCS，河南大学软件工程本科在读，学校在开封，目前在杭州工作，求职方向是 Agent 开发。',
+    '我的工程主线围绕 Go、Gin、GORM、云原生、Kubernetes、Sealos、AI Agent 和分布式系统展开。',
+    '除了工程经历，我也长期记录骑行、摄影、音乐 HiFi、投资观察和商业模式研究，让个人页面保留真实的生活纹理。',
   ];
 
   useEffect(() => {
@@ -424,18 +454,19 @@ function Projects() {
             <span className="pill muted">项目</span>
             <h2>
               项目按工程问题组织。
-              <em> 点开就能继续聊。</em>
+              <em> 仓库边界清晰可查。</em>
             </h2>
           </div>
           <p>
-            这里集中展示视频 Feed 流系统、Agent Flow、Sealos AIOps 和 GoClub，
-            对应后端接口、智能体工作流、云原生平台和开源协作。
+            这里集中展示 CompliK、GCFeed、SDD Agent Engine 和 GoClub，
+            对应集群合规、内容流后端、智能体工作流和开源知识库。
           </p>
         </div>
 
         <div className="feature-tabs" role="tablist" aria-label="项目分类">
           {projects.map((project, index) => (
             <button
+              aria-selected={index === activeIndex}
               className={index === activeIndex ? 'active' : ''}
               key={project.label}
               onClick={() => setActiveIndex(index)}
@@ -451,14 +482,14 @@ function Projects() {
           <div className="feature-app">
             <aside>
               <strong>LeoninCS</strong>
-              {['接口', '缓存', '消息队列', '云原生', '智能体'].map((item) => (
+              {['Gin', 'GORM', '缓存', '云原生', '智能体'].map((item) => (
                 <span key={item}>{item}</span>
               ))}
             </aside>
             <main>
               <div className="feature-toolbar">
                 <b>{active.title}</b>
-                <a href={active.href}>打开</a>
+                <a href={active.href} rel="noreferrer" target="_blank">打开仓库</a>
               </div>
               <div className="feature-cards">
                 <article style={{ backgroundImage: `url(${active.image})` }}>
@@ -476,9 +507,21 @@ function Projects() {
         </div>
 
         <div className="feature-caption">
-          <button type="button" onClick={() => setActiveIndex((activeIndex + projects.length - 1) % projects.length)}>←</button>
+          <button
+            aria-label="上一个项目"
+            type="button"
+            onClick={() => setActiveIndex((activeIndex + projects.length - 1) % projects.length)}
+          >
+            ←
+          </button>
           <p>{active.caption}</p>
-          <button type="button" onClick={() => setActiveIndex((activeIndex + 1) % projects.length)}>→</button>
+          <button
+            aria-label="下一个项目"
+            type="button"
+            onClick={() => setActiveIndex((activeIndex + 1) % projects.length)}
+          >
+            →
+          </button>
         </div>
       </div>
     </section>
@@ -521,13 +564,13 @@ function StorySection({ id, eyebrow, title, mutedTitle, text, cards }) {
                   <span />
                   <span />
                   <span />
-                  <button>记录</button>
+                  <span className="visual-tag">记录</span>
                 </div>
                 <div className="visual-card">
                   <div />
                   <h4>{card.visualTitle}</h4>
                   <p>{card.visualText}</p>
-                  <button>查看</button>
+                  <span className="visual-note">重点记录</span>
                 </div>
               </div>
             </article>
@@ -543,9 +586,9 @@ function Internship() {
     <StorySection
       id="internship"
       eyebrow="实习经历"
-      title="实习内容直接服务工程落地。"
-      mutedTitle=" 从接口到稳定性。"
-      text="这一块集中展示后端实习中的工程动作：开发、排查、观测、测试和复盘。"
+      title="实习内容落在真实系统里。"
+      mutedTitle=" 从 Admin 到 ProcScan。"
+      text="这一块集中展示 Sealos 系统组的 CompliK 实习经历：Admin 全栈、系统适配、CI、分析插件、二进制分析和持续维护。"
       cards={internshipCards}
     />
   );
@@ -558,7 +601,7 @@ function Competition() {
       eyebrow="竞赛奖项"
       title="竞赛记录展示长期训练强度。"
       mutedTitle=" 也展示解题耐心。"
-      text="算法训练、ACM 集训和 ICPC 现场经验放在独立区域，方便招聘方快速判断基础能力。"
+      text="算法训练、ACM 集训、CCPC、天梯赛、蓝桥杯、百度之星和 ICPC 现场经验放在独立区域，方便快速判断基础能力。"
       cards={competitionCards}
     />
   );
@@ -569,9 +612,9 @@ function Hobbies() {
     <StorySection
       id="hobbies"
       eyebrow="爱好"
-      title="骑行、摄影、理财。"
+      title="骑行、摄影、音乐、投资观察。"
       mutedTitle=" 保留真实的生活纹理。"
-      text="爱好区域聚焦三个长期兴趣：骑行、摄影和理财观察，让个人页有简历之外的识别度。"
+      text="爱好区域聚焦长期兴趣：10000+ 公里骑行、摄影、音乐 HiFi 和投资观察，让个人页有简历之外的识别度。"
       cards={hobbyCards}
     />
   );
@@ -612,9 +655,9 @@ function FinalCTA() {
     <section className="final-section">
       <div className="section-inner final-inner">
         <div className="final-copy">
-          <h2>后端实习沟通，从这里开始。</h2>
+          <h2>Agent 开发沟通，从这里开始。</h2>
           <p>
-            简历投递、面试沟通和后端实习机会可以直接通过邮箱联系。
+            简历投递、面试沟通、Agent 开发机会和开源协作可以直接通过邮箱联系。
           </p>
           <a className="cta" href={`mailto:${contactEmail}`}>发送邮件</a>
         </div>

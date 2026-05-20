@@ -10,19 +10,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#fafafa" />
 
-  <title>献超前 | LeoninCS 后端开发实习生简历</title>
+  <title>献超前 | LeoninCS Agent 开发方向简历</title>
   <meta name="description"
-    content="献超前 / LeoninCS 的交互式 3D 简历站，突出后端开发实习经历、联系方式、奖项竞赛、Go 后端、Kubernetes、Sealos、AI Agent 和项目经历。" />
+    content="献超前 / LeoninCS 的交互式 3D 简历站，突出 Agent 开发求职方向、Sealos 系统组实习、CompliK、GCFeed、SDD Agent Engine、Go 后端、云原生和算法竞赛。" />
   <meta name="author" content="LeoninCS, Xianchao Qian, 献超前" />
   <meta name="keywords"
-    content="LeoninCS, 献超前, Xianchao Qian, 后端开发实习生, Go, Kubernetes, Sealos, AI Agent, LangGraph, Redis, MQ, Raft, Codeforces, LeetCode, ICPC, 摄影展览" />
+    content="LeoninCS, 献超前, Xianchao Qian, Agent 开发, Agent 开发方向, Go, Gin, GORM, Kubernetes, Sealos, CompliK, GCFeed, AI Agent, SDD, LangGraph, Redis, MQ, Raft, Codeforces, LeetCode, CCPC, GPLT, 蓝桥杯, 百度之星, ICPC, 摄影展览" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="index.html" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="献超前 | LeoninCS 后端开发实习生简历" />
+  <meta property="og:title" content="献超前 | LeoninCS Agent 开发方向简历" />
   <meta property="og:description"
-    content="面向简历投递的交互式 3D 个人空间，集中展示联系方式、实习经历、奖项竞赛、技术栈和项目经历。" />
+    content="面向 Agent 开发方向的交互式个人空间，集中展示 CompliK 实习、GCFeed、SDD Agent Engine、Go 后端、云原生、算法竞赛和联系方式。" />
   <meta property="og:url" content="https://github.com/LeoninCS" />
   <meta property="og:site_name" content="献超前简历站" />
   <meta property="og:image" content="picture/01-city-tower-blue-hour.jpg" />
@@ -31,8 +31,8 @@
   <meta property="og:locale" content="zh_CN" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="献超前 | LeoninCS 后端开发实习生简历" />
-  <meta name="twitter:description" content="交互式 3D 简历站，包含联系方式、实习经历、奖项竞赛、技术栈、项目经历和摄影展览。" />
+  <meta name="twitter:title" content="献超前 | LeoninCS Agent 开发方向简历" />
+  <meta name="twitter:description" content="交互式 3D 简历站，包含 Agent 开发方向、Sealos 实习、CompliK、GCFeed、SDD Agent Engine、竞赛奖项和摄影展览。" />
   <meta name="twitter:image" content="picture/01-city-tower-blue-hour.jpg" />
 
   <script type="application/ld+json">
@@ -42,7 +42,7 @@
         "@type": "Person",
         "name": "Xianchao Qian",
         "alternateName": ["LeoninCS", "献超前"],
-        "jobTitle": "后端开发实习生",
+        "jobTitle": "Agent 开发求职方向",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "杭州",
@@ -50,26 +50,40 @@
         },
         "alumniOf": {
           "@type": "CollegeOrUniversity",
-          "name": "河南大学"
+          "name": "河南大学",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "开封",
+            "addressCountry": "CN"
+          }
         },
         "award": [
           "LeetCode 2100",
           "Codeforces 1653",
           "1500+ Problems",
           "河南大学 ACM 集训队",
+          "2026 年第八届 CCPC 河南省大学生程序设计竞赛金牌",
+          "2026 年第十一届中国高校计算机大赛-团体程序设计天梯赛个人全国二等奖",
+          "2025 年第十六届蓝桥杯全国软件和信息技术专业人才大赛省赛一等奖",
+          "2025 年第二十一届百度之星程序设计大赛初赛铜奖",
           "ICPC 现场经验"
         ],
         "knowsAbout": [
           "Go",
+          "Gin",
+          "GORM",
           "Python",
           "后端工程",
           "Kubernetes",
           "Sealos",
+          "CompliK",
+          "GCFeed",
           "Redis",
           "MQ",
           "Raft",
           "分布式系统",
           "AI Agent",
+          "SDD",
           "LangGraph",
           "Agent Workflow",
           "算法训练",
@@ -87,7 +101,7 @@
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "献超前 3D 简历站",
-        "description": "献超前 / LeoninCS 的交互式 3D 简历站，展示后端开发实习经历、奖项竞赛、技术栈和项目经历。"
+        "description": "献超前 / LeoninCS 的交互式 3D 简历站，展示 Agent 开发方向、Sealos 系统组实习、工程项目、算法竞赛和摄影展览。"
       },
       {
         "@context": "https://schema.org",
@@ -107,12 +121,6 @@
     ]
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Gloria+Hallelujah&family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
-
   <style>
     .sr-only-seo {
       position: absolute !important;
@@ -125,6 +133,13 @@
       white-space: nowrap !important;
       border: 0 !important;
     }
+
+    .sr-only-seo * {
+      display: block !important;
+      max-width: 1px !important;
+      max-height: 1px !important;
+      overflow: hidden !important;
+    }
   </style>
   <script type="module" crossorigin src="assets/index-DV-1WFZA.js"></script>
   <link rel="stylesheet" crossorigin href="assets/index-7YSu33UF.css">
@@ -133,8 +148,8 @@
 <body>
   <div id="seo-content" class="sr-only-seo">
     <header>
-      <h1>献超前 / LeoninCS | 后端开发实习生简历</h1>
-      <p>河南大学软件工程本科在读，常驻杭州，求职方向为后端开发、云原生平台和 AI Agent 工程。</p>
+      <h1>献超前 / LeoninCS | Agent 开发方向简历</h1>
+      <p>河南大学软件工程本科在读，学校在开封，目前在杭州工作，求职方向为 Agent 开发。</p>
     </header>
 
     <nav aria-label="简历导航">
@@ -152,8 +167,8 @@
     <main>
       <article id="profile">
         <h2>简历速览</h2>
-        <p><strong>姓名：</strong>献超前 / Xianchao Qian；<strong>技术 ID：</strong>LeoninCS；<strong>身份：</strong>河南大学软件工程本科在读，后端开发实习生。</p>
-        <p><strong>所在地：</strong>杭州，中国；<strong>方向：</strong>Go 后端、云原生平台、Kubernetes、Sealos、AI Agent、分布式系统和开源协作。</p>
+        <p><strong>姓名：</strong>献超前 / Xianchao Qian；<strong>技术 ID：</strong>LeoninCS；<strong>身份：</strong>河南大学软件工程本科在读，Agent 开发方向。</p>
+        <p><strong>学校与专业：</strong>河南大学，软件工程本科在读，学校在开封；<strong>当前工作地：</strong>杭州，中国；<strong>求职方向：</strong>Agent 开发；<strong>技术方向：</strong>Go、Gin、GORM、云原生、Kubernetes、Sealos、AI Agent、分布式系统和开源协作。</p>
       </article>
 
       <article id="contact">
@@ -171,8 +186,8 @@
 
       <article id="internship">
         <h2>实习经历</h2>
-        <p>后端开发实习经历覆盖接口开发、日志排查、指标观察、问题拆解、测试补充和服务稳定性建设。</p>
-        <p>工程习惯强调需求拆解、边界条件、可观测性、代码质量、PR 沟通和持续复盘。</p>
+        <p>2026 年 3 月至今在环界云计算 / Sealos 系统组实习，参与 CompliK 集群合规系统建设。</p>
+        <p>工作内容覆盖 Admin 面板全栈开发、Admin 与 CompliK 适配、CompliK CI 搭建、多端分析插件、ProcScan 二进制分析和系统迭代维护。</p>
       </article>
 
       <article id="awards">
@@ -182,13 +197,17 @@
           <li>Codeforces 1653，竞赛能力记录。</li>
           <li>累计 1500+ Problems，持续刷题与复盘。</li>
           <li>河南大学 ACM 集训队，具备 ICPC 现场经验。</li>
+          <li>2026 年第八届 CCPC 河南省大学生程序设计竞赛金牌，O（1）团队。</li>
+          <li>2026 年第十一届中国高校计算机大赛-团体程序设计天梯赛个人全国二等奖。</li>
+          <li>2025 年第十六届蓝桥杯全国软件和信息技术专业人才大赛省赛一等奖。</li>
+          <li>2025 年第二十一届百度之星程序设计大赛初赛铜奖。</li>
         </ul>
       </article>
 
       <article id="skills">
         <h2>技术栈</h2>
-        <p>核心技术包含 Go、Python、React、Three.js、Kubernetes、Sealos、Redis、MQ、LangGraph、Agent Workflow、Raft 和分布式系统。</p>
-        <p>后端方向关注接口设计、缓存策略、消息队列、并发场景、服务稳定性、集群平台和自动化运维。</p>
+        <p>核心技术包含 Go、Gin、GORM、Python、React、Three.js、Kubernetes、Sealos、Redis、MQ、SDD、LangGraph、Agent Workflow、Raft 和分布式系统。</p>
+        <p>后端与 Agent 方向关注接口设计、缓存策略、消息队列、云原生、合规扫描、工具调用、状态流转和工作流编排。</p>
       </article>
 
       <article id="engineering-projects">
@@ -199,25 +218,25 @@
           <a href="https://goclub.space/">GoClub 主页</a>
         </section>
         <section>
-          <h3>Feed System</h3>
-          <p>视频 Feed 流系统关注内容流接口、缓存策略、分页链路、消息队列和高并发场景下的服务稳定性。</p>
-          <a href="https://github.com/LeoninCS/feedsystem_video_go">Feed System 项目仓库</a>
+          <h3>GCFeed</h3>
+          <p>GoClubFeed 面向短视频场景，围绕内容生产、分发、消费与治理链路展开，技术栈包含 Go、Gin、GORM、Redis、MQ 和 MySQL。</p>
+          <a href="https://github.com/LeoninCS/GCFeed">GCFeed 项目仓库</a>
         </section>
         <section>
-          <h3>Agent Flow</h3>
-          <p>多智能体工作流助手基于 LangGraph 思路，探索任务编排、工具调用、状态流转和工程化落地。</p>
-          <a href="https://github.com/LeoninCS/multi-agent-workflow-assistant">Agent Flow 项目仓库</a>
+          <h3>SDD Agent Engine</h3>
+          <p>基于 SDD 的本地 Agent 工作流引擎，面向 VS Code、RAG、多 Agent 编排、自动门禁和文档回写闭环。</p>
+          <a href="https://github.com/LeoninCS/SDD-Agent-WorkflowEngine">SDD Agent Engine 项目仓库</a>
         </section>
         <section>
-          <h3>Sealos AIOps</h3>
-          <p>Sealos AIOps 与集群合规实践围绕 Kubernetes 平台、巡检、合规扫描、自动化运维和云原生工程展开。</p>
-          <a href="https://github.com/labring/sealos">Sealos 项目仓库</a>
+          <h3>CompliK</h3>
+          <p>Kubernetes 集群合规系统，实习工作围绕 Admin、CI、插件适配、ProcScan 和系统维护展开。</p>
+          <a href="https://github.com/labring/CompliK">CompliK 项目仓库</a>
         </section>
       </article>
 
       <article id="interests">
         <h2>兴趣与摄影展览</h2>
-        <p>长期兴趣包含摄影、骑行、音乐 HiFi、R&amp;B、Jazz、Hip-Hop、Pop、投资观察和商业模式研究。骑行累计 10000+ 公里，照片集中展示在摄影展览区域。</p>
+        <p>长期兴趣包含摄影、骑行、音乐 HiFi、R&amp;B、Jazz、Hip-Hop、Pop、投资观察和商业模式研究。骑行累计 10000+ 公里，代表路线包括环太湖和环海南岛，照片集中展示在摄影展览区域。</p>
       </article>
 
       <article id="photography-exhibition">
