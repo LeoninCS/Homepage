@@ -167,6 +167,15 @@ function useScrollEffects() {
   useEffect(() => {
     const root = document.documentElement;
     const handleResize = () => update();
+    const rootVars = new Map();
+    const setRootVar = (name, value) => {
+      if (rootVars.get(name) === value) {
+        return;
+      }
+
+      rootVars.set(name, value);
+      root.style.setProperty(name, value);
+    };
     const revealTargets = [
       '.hero-device',
       '.split-heading',
@@ -235,21 +244,40 @@ function useScrollEffects() {
     });
 
     window.lenis = lenis;
+    setRootVar('--hero-device-y', '0px');
+    setRootVar('--hero-device-opacity', '1');
+    setRootVar('--hero-ui-opacity', '1');
+
+    const stackCards = [...document.querySelectorAll('.get-card')];
+    const stackSection = document.querySelector('.what-section');
 
     const update = (nextScroll) => {
       const scrollY = nextScroll ?? lenis.animatedScroll ?? window.scrollY;
       const viewportHeight = window.innerHeight;
+      const viewportWidth = window.innerWidth;
+      const heroMotionProgress = clamp(scrollY / Math.min(760, viewportHeight * 0.92), 0, 1);
+      const forestLiftTarget = viewportWidth <= 560 ? -58 : viewportWidth <= 980 ? -84 : -118;
+      const frontHillLiftTarget = viewportWidth <= 560 ? -22 : -34;
+      const backHillLiftTarget = viewportWidth <= 560 ? -8 : -14;
 
       document.body.classList.toggle('is-scrolled', scrollY > 16);
-      root.style.setProperty('--hero-device-y', '0px');
-      root.style.setProperty('--hero-device-opacity', '1');
-      root.style.setProperty('--hill-back-y', '0px');
-      root.style.setProperty('--hill-front-y', '0px');
-      root.style.setProperty('--forest-y', '0px');
-      root.style.setProperty('--hero-ui-opacity', '1');
-      root.style.setProperty('--final-glow-y', `${Math.round(scrollY * -0.018)}px`);
+      setRootVar('--hill-back-y', `${Math.round(heroMotionProgress * backHillLiftTarget)}px`);
+      setRootVar('--hill-front-y', `${Math.round(heroMotionProgress * frontHillLiftTarget)}px`);
+      setRootVar('--forest-y', `${Math.round(heroMotionProgress * forestLiftTarget)}px`);
+      setRootVar('--hero-light-x', `${Math.round((heroMotionProgress - 0.5) * 22)}px`);
+      setRootVar('--hero-light-y', `${Math.round(heroMotionProgress * -22)}px`);
+      setRootVar('--final-glow-y', `${Math.round(scrollY * -0.018)}px`);
 
-      const stackCards = [...document.querySelectorAll('.get-card')];
+      if (!stackSection) {
+        return;
+      }
+
+      const stackTop = stackSection.offsetTop - viewportHeight * 1.1;
+      const stackBottom = stackSection.offsetTop + stackSection.offsetHeight + viewportHeight;
+      if (scrollY < stackTop || scrollY > stackBottom) {
+        return;
+      }
+
       stackCards.forEach((card, index) => {
         const rect = card.getBoundingClientRect();
         const nextRect = stackCards[index + 1]?.getBoundingClientRect();
@@ -309,9 +337,96 @@ function Nav() {
   );
 }
 
+function MockColorField() {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return undefined;
+    }
+
+    const context = canvas.getContext('2d', { alpha: true });
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let animationFrame = 0;
+    let width = 0;
+    let height = 0;
+    let lastPaint = 0;
+    const colorStops = [
+      ['rgba(164, 255, 236, 0.58)', 'rgba(164, 255, 236, 0)'],
+      ['rgba(255, 214, 148, 0.42)', 'rgba(255, 214, 148, 0)'],
+      ['rgba(255, 169, 217, 0.38)', 'rgba(255, 169, 217, 0)'],
+      ['rgba(122, 164, 255, 0.32)', 'rgba(122, 164, 255, 0)'],
+      ['rgba(220, 255, 177, 0.3)', 'rgba(220, 255, 177, 0)'],
+    ];
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      width = Math.max(280, Math.round(rect.width / 2));
+      height = Math.max(220, Math.round(rect.height / 2));
+      canvas.width = width;
+      canvas.height = height;
+    };
+
+    const paint = (time = 0) => {
+      context.clearRect(0, 0, width, height);
+      context.fillStyle = '#202020';
+      context.fillRect(0, 0, width, height);
+      context.globalCompositeOperation = 'lighter';
+
+      colorStops.forEach(([inner, outer], index) => {
+        const phase = time * (0.00012 + index * 0.000018) + index * 1.78;
+        const x = width * (0.54 + Math.sin(phase) * (0.22 + index * 0.018));
+        const y = height * (0.42 + Math.cos(phase * 0.91) * (0.28 - index * 0.018));
+        const radius = Math.max(width, height) * (0.36 + index * 0.045);
+        const gradient = context.createRadialGradient(x, y, 0, x, y, radius);
+        gradient.addColorStop(0, inner);
+        gradient.addColorStop(1, outer);
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, width, height);
+      });
+
+      context.globalCompositeOperation = 'source-over';
+      const shadow = context.createLinearGradient(0, 0, 0, height);
+      shadow.addColorStop(0, 'rgba(255, 255, 255, 0.12)');
+      shadow.addColorStop(0.34, 'rgba(0, 0, 0, 0)');
+      shadow.addColorStop(1, 'rgba(0, 0, 0, 0.68)');
+      context.fillStyle = shadow;
+      context.fillRect(0, 0, width, height);
+    };
+
+    const tick = (time) => {
+      if (time - lastPaint > 33) {
+        paint(time);
+        lastPaint = time;
+      }
+
+      animationFrame = requestAnimationFrame(tick);
+    };
+
+    resize();
+    paint();
+
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas);
+
+    if (!mediaQuery.matches) {
+      animationFrame = requestAnimationFrame(tick);
+    }
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+    };
+  }, []);
+
+  return <canvas className="mock-color-field" ref={canvasRef} aria-hidden="true" />;
+}
+
 function ResumeMockup({ compact = false }) {
   return (
     <div className={`product-mockup ${compact ? 'compact' : ''}`}>
+      <MockColorField />
       <aside className="mock-sidebar">
         <div className="mock-pill" />
         <div className="mock-search" />
