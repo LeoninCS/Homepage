@@ -222,33 +222,31 @@ function useScrollEffects() {
       subtree: true,
     });
 
-    let animationFrame = 0;
     const lenis = new Lenis({
-      autoRaf: false,
-      anchors: {
-        offset: 0,
-        duration: 1.08,
-      },
-      duration: 1.12,
-      easing: (time) => Math.min(1, 1.001 - 2 ** (-10 * time)),
+      autoRaf: true,
+      autoToggle: true,
+      anchors: true,
+      lerp: 0.1,
+      syncTouch: false,
       smoothWheel: true,
-      wheelMultiplier: 0.9,
-      touchMultiplier: 1.2,
+      wheelMultiplier: 1,
+      touchMultiplier: 1,
+      overscroll: true,
     });
+
+    window.lenis = lenis;
 
     const update = (nextScroll) => {
       const scrollY = nextScroll ?? lenis.animatedScroll ?? window.scrollY;
-      const heroHeight = document.querySelector('.hero')?.offsetHeight || 1269;
-      const heroProgress = clamp(scrollY / heroHeight, 0, 1.2);
       const viewportHeight = window.innerHeight;
 
       document.body.classList.toggle('is-scrolled', scrollY > 16);
-      root.style.setProperty('--hero-device-y', `${Math.round(scrollY * 0.08)}px`);
-      root.style.setProperty('--hero-device-opacity', String(clamp(1 - heroProgress * 1.65, 0, 1)));
-      root.style.setProperty('--hill-back-y', `${Math.round(scrollY * 0.31)}px`);
-      root.style.setProperty('--hill-front-y', `${Math.round(scrollY * 0.17)}px`);
-      root.style.setProperty('--forest-y', `${64 + Math.round(scrollY * 0.08)}px`);
-      root.style.setProperty('--hero-ui-opacity', String(clamp(1 - heroProgress * 0.25, 0.72, 1)));
+      root.style.setProperty('--hero-device-y', '0px');
+      root.style.setProperty('--hero-device-opacity', '1');
+      root.style.setProperty('--hill-back-y', '0px');
+      root.style.setProperty('--hill-front-y', '0px');
+      root.style.setProperty('--forest-y', '0px');
+      root.style.setProperty('--hero-ui-opacity', '1');
       root.style.setProperty('--final-glow-y', `${Math.round(scrollY * -0.018)}px`);
 
       const stackCards = [...document.querySelectorAll('.get-card')];
@@ -266,24 +264,18 @@ function useScrollEffects() {
       });
     };
 
-    const raf = (time) => {
-      lenis.raf(time);
-      animationFrame = window.requestAnimationFrame(raf);
-    };
-
     update();
-    animationFrame = window.requestAnimationFrame(raf);
     lenis.on('scroll', ({ scroll }) => update(scroll));
     window.addEventListener('resize', handleResize);
 
     return () => {
       observer.disconnect();
       mutationObserver.disconnect();
+      if (window.lenis === lenis) {
+        delete window.lenis;
+      }
       lenis.destroy();
       window.removeEventListener('resize', handleResize);
-      if (animationFrame) {
-        window.cancelAnimationFrame(animationFrame);
-      }
     };
   }, []);
 }
@@ -340,8 +332,7 @@ function ResumeMockup({ compact = false }) {
         <p>Agent 开发 · Go · Gin · GORM · 云原生</p>
         <a className="mock-button" href={`mailto:${contactEmail}`}>查看联系方式</a>
         <small>
-          河南大学软件工程本科在读（开封） → Sealos 系统组实习 → LeetCode 2100 / Codeforces 1653 →
-          CompliK / GCFeed / SDD Agent Engine / GoClub
+          河南大学软件工程本科（开封） → Sealos 系统组实习 → CompliK / GCFeed / SDD Agent
         </small>
       </section>
     </div>

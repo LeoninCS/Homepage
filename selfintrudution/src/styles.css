@@ -27,6 +27,7 @@
   --hill-front-y: 0px;
   --forest-y: 0px;
   --hero-ui-opacity: 1;
+  --framer-spring: 1000ms cubic-bezier(0.16, 1, 0.3, 1);
   --final-glow-y: 0px;
   --page-bg: #050708;
   --panel-bg: #101314;
@@ -223,11 +224,24 @@ body.is-scrolled .top-nav {
 
 .hero {
   position: relative;
-  min-height: 1180px;
+  min-height: 1269px;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 50% 20%, rgba(255, 255, 255, 0.06), transparent 34%),
-    linear-gradient(180deg, #1d292b 0%, #30383a 48%, #7e696d 78%, #050708 100%);
+    radial-gradient(ellipse at 50% 18%, rgba(255, 255, 255, 0.11), transparent 35%),
+    radial-gradient(ellipse at 50% 68%, rgba(238, 181, 170, 0.18), transparent 42%),
+    linear-gradient(180deg, #1c2729 0%, #3b4243 48%, #9d7777 80%, #050708 100%);
+}
+
+.hero::after {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 5;
+  height: 240px;
+  background:
+    radial-gradient(ellipse at 50% 78%, rgba(255, 210, 195, 0.16), transparent 44%),
+    linear-gradient(180deg, transparent, rgba(5, 7, 8, 0.5) 72%, var(--page-bg));
+  pointer-events: none;
+  content: "";
 }
 
 .hero-copy {
@@ -323,9 +337,9 @@ body.is-scrolled .top-nav {
 .hero-device {
   position: absolute;
   left: 50%;
-  bottom: 34px;
+  bottom: -11px;
   z-index: 6;
-  width: min(960px, calc(100% - 160px));
+  width: min(960px, calc(100% - 96px));
   opacity: var(--hero-device-opacity);
   transform: translate(-50%, var(--hero-device-y));
   will-change: transform, opacity;
@@ -341,39 +355,43 @@ body.is-scrolled .top-nav {
 .hills-back {
   bottom: 0;
   z-index: 1;
-  height: clamp(420px, 36.9vw, 590px);
+  height: clamp(500px, 44vw, 690px);
   transform: translateY(var(--hill-back-y));
   background:
-    linear-gradient(180deg, transparent 72%, rgba(0, 0, 0, 0.18) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 54%, rgba(5, 7, 8, 0.14) 100%),
     url("/images/fora-hero-far.png") center bottom / 100% 100% no-repeat;
-  opacity: 1;
+  opacity: 0.72;
+  filter: saturate(0.64) contrast(0.82) brightness(1.08);
   will-change: transform;
 }
 
 .hills-front {
   bottom: 0;
   z-index: 2;
-  height: clamp(390px, 34.4vw, 551px);
+  height: clamp(500px, 41.5vw, 665px);
   transform: translateY(var(--hill-front-y));
   background:
-    linear-gradient(180deg, transparent 74%, rgba(0, 0, 0, 0.28) 100%),
+    linear-gradient(180deg, transparent 66%, rgba(5, 7, 8, 0.28) 100%),
     url("/images/fora-hero-mid.png") center bottom / 100% 100% no-repeat;
+  filter: saturate(0.78) contrast(0.95) brightness(0.92);
   will-change: transform;
 }
 
 .forest-foreground {
-  bottom: 96px;
-  z-index: 4;
-  height: clamp(285px, 27.8vw, 488px);
+  bottom: 0;
+  z-index: 7;
+  height: clamp(470px, 36.9vw, 610px);
   background:
-    linear-gradient(180deg, transparent 62%, rgba(0, 0, 0, 0.9) 100%),
+    linear-gradient(180deg, transparent 52%, rgba(5, 7, 8, 0.58) 82%, var(--page-bg) 100%),
     url("/images/fora-hero-foreground.png") center bottom / 100% 100% no-repeat;
-  opacity: 1;
+  opacity: 0.88;
+  filter: saturate(1.02) contrast(1.08) brightness(0.78);
   transform: translateY(var(--forest-y));
   will-change: transform;
 }
 
 .product-mockup {
+  position: relative;
   display: grid;
   grid-template-columns: 300px 1fr;
   min-height: 420px;
@@ -381,25 +399,57 @@ body.is-scrolled .top-nav {
   border: 5px solid #171717;
   border-radius: 24px;
   background:
-    radial-gradient(circle at 56% 18%, #efffff 0 14%, #cdf3ea 17%, transparent 29%),
-    radial-gradient(circle at 92% 38%, #f0d3ff 0 18%, transparent 31%),
-    linear-gradient(128deg, #111915 0 23%, #dbfff6 24% 58%, #c7ab2d 61%, #ffffff 78%);
+    radial-gradient(circle at 55% 16%, rgba(255, 255, 255, 0.96) 0 13%, rgba(198, 249, 238, 0.74) 18%, transparent 32%),
+    radial-gradient(circle at 88% 36%, rgba(245, 211, 255, 0.76) 0 16%, transparent 31%),
+    linear-gradient(128deg, #121918 0 24%, #dffff8 25% 58%, #d1bb45 63%, #ffffff 82%);
   box-shadow:
-    0 38px 96px rgba(0, 0, 0, 0.54),
-    0 0 0 1px rgba(255, 255, 255, 0.08);
+    0 54px 130px rgba(0, 0, 0, 0.52),
+    0 18px 44px rgba(42, 20, 18, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+
+.product-mockup::before,
+.product-mockup::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.product-mockup::before {
+  z-index: 0;
+  background:
+    radial-gradient(circle at 58% 20%, rgba(255, 255, 255, 0.92) 0 7%, rgba(177, 255, 238, 0.6) 11%, transparent 24%),
+    radial-gradient(circle at 78% 28%, rgba(255, 202, 234, 0.74), transparent 24%),
+    radial-gradient(circle at 48% 74%, rgba(95, 230, 211, 0.72), transparent 32%),
+    radial-gradient(circle at 91% 78%, rgba(255, 220, 122, 0.58), transparent 24%);
+  mix-blend-mode: screen;
+  opacity: 0.82;
+  animation: chroma-drift 9s ease-in-out infinite alternate;
+  will-change: transform, filter;
+}
+
+.product-mockup::after {
+  z-index: 1;
+  background:
+    linear-gradient(180deg, transparent 36%, rgba(5, 7, 8, 0.12) 52%, rgba(5, 7, 8, 0.66) 100%),
+    url("/images/fora-hero-mid.png") center bottom / 112% 70% no-repeat,
+    linear-gradient(118deg, rgba(255, 255, 255, 0.3), transparent 18% 58%, rgba(255, 255, 255, 0.16)),
+    radial-gradient(ellipse at 72% 10%, rgba(255, 255, 255, 0.42), transparent 38%);
+  opacity: 0.78;
 }
 
 .hero-device .product-mockup {
-  min-height: 520px;
+  min-height: 676px;
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(72px);
   transition:
-    opacity 780ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 780ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity var(--framer-spring),
+    transform var(--framer-spring);
 }
 
 .hero-device .mock-sidebar {
-  min-height: 520px;
+  min-height: 676px;
 }
 
 .hero-device.is-visible .product-mockup {
@@ -408,6 +458,8 @@ body.is-scrolled .top-nav {
 }
 
 .mock-sidebar {
+  position: relative;
+  z-index: 2;
   min-height: 420px;
   padding: 32px 28px;
   color: rgba(255, 255, 255, 0.74);
@@ -420,7 +472,7 @@ body.is-scrolled .top-nav {
 .hero-device.is-visible .mock-course-title,
 .hero-device.is-visible .mock-line,
 .hero-device.is-visible .mock-panel > * {
-  animation: mock-rise 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: mock-rise var(--framer-spring) both;
 }
 
 .mock-pill {
@@ -518,11 +570,14 @@ body.is-scrolled .top-nav {
 }
 
 .mock-panel {
-  align-self: center;
+  position: relative;
+  z-index: 2;
+  align-self: start;
   justify-self: center;
-  width: min(410px, 78%);
-  min-height: 316px;
-  padding: 42px 36px 30px;
+  width: min(500px, 82%);
+  min-height: 0;
+  margin-top: 24px;
+  padding: 22px 30px 16px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 20px;
   text-align: center;
@@ -533,9 +588,9 @@ body.is-scrolled .top-nav {
 .mock-avatar {
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
-  margin: 0 auto 22px;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 8px;
   border-radius: 50%;
   color: #111;
   background: #fff;
@@ -544,13 +599,15 @@ body.is-scrolled .top-nav {
 
 .mock-panel h3 {
   margin: 0;
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 560;
 }
 
 .mock-panel p {
-  margin: 8px 0 22px;
+  margin: 5px 0 10px;
   color: rgba(255, 255, 255, 0.68);
+  font-size: 17px;
+  line-height: 1.4;
 }
 
 .mock-button {
@@ -558,8 +615,8 @@ body.is-scrolled .top-nav {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 56px;
-  border-radius: 18px;
+  height: 44px;
+  border-radius: 16px;
   color: #000;
   background: rgba(255, 255, 255, 0.78);
   font-weight: 600;
@@ -567,10 +624,12 @@ body.is-scrolled .top-nav {
 
 .mock-panel small {
   display: block;
-  margin-top: 24px;
+  max-height: 2.9em;
+  margin-top: 9px;
+  overflow: hidden;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 13px;
-  line-height: 1.55;
+  font-size: 12.5px;
+  line-height: 1.5;
   text-align: left;
 }
 
@@ -774,8 +833,8 @@ body.is-scrolled .top-nav {
   opacity: 0;
   transform: translateY(28px) scale(0.965);
   transition:
-    opacity 780ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 780ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity var(--framer-spring),
+    transform var(--framer-spring);
 }
 
 .feature-stage.is-visible .feature-app {
@@ -845,7 +904,7 @@ body.is-scrolled .top-nav {
   background-size: cover;
   transform: translateZ(0) scale(1);
   transition:
-    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 520ms cubic-bezier(0.16, 1, 0.3, 1),
     filter 420ms ease;
   will-change: transform;
 }
@@ -1044,7 +1103,7 @@ body.is-scrolled .top-nav {
   background: rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(16px);
   transform: translateY(0) scale(0.98);
-  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform var(--framer-spring);
 }
 
 .get-card.is-visible .visual-card {
@@ -1335,7 +1394,7 @@ body.is-scrolled .top-nav {
 
 .reveal:not(.hero-device),
 .pill {
-  animation: fade-up 780ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: fade-up var(--framer-spring) both;
 }
 
 .hero-device.reveal {
@@ -1352,8 +1411,8 @@ body.is-scrolled .top-nav {
   opacity: 0;
   transform: translateY(30px);
   transition:
-    opacity 780ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 780ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity var(--framer-spring),
+    transform var(--framer-spring);
 }
 
 .split-heading.is-visible,
@@ -1373,8 +1432,8 @@ body.is-scrolled .top-nav {
 
 .social-strip a {
   transition:
-    opacity 780ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 780ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity var(--framer-spring),
+    transform var(--framer-spring),
     border-color 180ms ease,
     background 180ms ease;
 }
@@ -1419,6 +1478,23 @@ body.is-scrolled .top-nav {
   }
 }
 
+@keyframes chroma-drift {
+  0% {
+    filter: hue-rotate(0deg);
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+
+  50% {
+    filter: hue-rotate(8deg);
+    transform: translate3d(1.5%, 1%, 0) scale(1.03);
+  }
+
+  100% {
+    filter: hue-rotate(-6deg);
+    transform: translate3d(2%, -1.5%, 0) scale(1.04);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1456,7 +1532,7 @@ body.is-scrolled .top-nav {
   }
 
   .hero-device {
-    bottom: 28px;
+    bottom: 0;
     width: calc(100% - 72px);
   }
 
@@ -1727,9 +1803,10 @@ body.is-scrolled .top-nav {
   }
 
   .forest-foreground {
-    bottom: 36px;
-    height: 210px;
+    bottom: -18px;
+    height: 340px;
     background-size: cover;
+    transform: translateY(0);
   }
 
   .about-section,
