@@ -54,6 +54,7 @@ const internshipCards = [
     note: '关键词：Admin、CI、合规扫描、ProcScan、系统适配。',
     visualTitle: 'CompliK Admin',
     visualText: 'Admin / CI / ProcScan / Plugin',
+    image: '/picture/35-programming-contest-team-photo.jpg',
   },
 ];
 
@@ -65,6 +66,7 @@ const competitionCards = [
     note: '长期算法训练支撑复杂度分析、边界覆盖和实现稳定性。',
     visualTitle: 'LeetCode 2100',
     visualText: 'Codeforces 1653 / 1500+ Problems',
+    image: '/picture/46-icpc-wuhan-regional-01.jpg',
   },
   {
     eyebrow: '省赛与国赛',
@@ -73,6 +75,7 @@ const competitionCards = [
     note: '团队赛与个人赛共同体现赛时分工、题目筛选和稳定交付。',
     visualTitle: 'CCPC Gold',
     visualText: 'GPLT National Second Prize',
+    image: '/picture/42-icpc-shenzhen-invitational-01.jpg',
   },
   {
     eyebrow: '补充奖项',
@@ -81,6 +84,7 @@ const competitionCards = [
     note: '多类型竞赛经历覆盖算法基本功和短时编码能力。',
     visualTitle: 'Lanqiao / Baidu Star',
     visualText: '省一 / 初赛铜奖',
+    image: '/picture/48-icpc-wuhan-regional-03.jpg',
   },
 ];
 
@@ -92,6 +96,7 @@ const hobbyCards = [
     visualTitle: 'Cycling 10000+ km',
     visualText: '环太湖 / 环海南岛 / 复盘记录',
     note: '长期主义从路上开始，也会回到工程节奏里。',
+    image: '/picture/38-bike-coastal-road.jpg',
   },
   {
     eyebrow: '摄影',
@@ -100,6 +105,7 @@ const hobbyCards = [
     visualTitle: 'Photography',
     visualText: '城市 / 山野 / 湖畔 / 古建',
     note: '照片是个人页面里的真实质感来源。',
+    image: '/picture/16-lake-sunset-wide.jpg',
   },
   {
     eyebrow: '音乐与 HiFi',
@@ -108,6 +114,7 @@ const hobbyCards = [
     visualTitle: 'Music / HiFi',
     visualText: 'R&B / Jazz / Hip-Hop / Pop',
     note: '把听感当作一种审美训练。',
+    image: '/picture/02-riverside-lit-bridge-night.jpg',
   },
   {
     eyebrow: '投资观察',
@@ -116,6 +123,7 @@ const hobbyCards = [
     visualTitle: 'Finance Notes',
     visualText: '商业模式 / 现金流 / 技术趋势',
     note: '用结构化记录训练信息判断。',
+    image: '/picture/01-city-tower-blue-hour.jpg',
   },
 ];
 
@@ -190,7 +198,9 @@ function useScrollEffects() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          entry.target.classList.toggle('is-visible', entry.isIntersecting);
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
         });
       },
       {
@@ -204,12 +214,18 @@ function useScrollEffects() {
       if (scope.matches?.(revealTargets) && !observedTargets.has(scope)) {
         observedTargets.add(scope);
         observer.observe(scope);
+        if (scope.getBoundingClientRect().top < window.innerHeight * 1.12) {
+          scope.classList.add('is-visible');
+        }
       }
 
       scope.querySelectorAll?.(revealTargets).forEach((element) => {
         if (!observedTargets.has(element)) {
           observedTargets.add(element);
           observer.observe(element);
+          if (element.getBoundingClientRect().top < window.innerHeight * 1.12) {
+            element.classList.add('is-visible');
+          }
         }
       });
     };
@@ -442,13 +458,21 @@ function ResumeMockup({ compact = false }) {
         <div className="mock-line short" />
       </aside>
       <section className="mock-panel">
-        <div className="mock-avatar">X</div>
-        <h3>献超前 / LeoninCS</h3>
-        <p>Agent 开发 · Go · Gin · GORM · 云原生</p>
-        <a className="mock-button" href={`mailto:${contactEmail}`}>查看联系方式</a>
-        <small>
-          河南大学软件工程本科（开封） → Sealos 系统组实习 → CompliK / GCFeed / SDD Agent
-        </small>
+        <div className="mock-community">
+          <div className="mock-avatar">LC</div>
+          <h3>LeoninCS</h3>
+          <p>Agent 开发方向简历</p>
+          <div className="mock-members" aria-label="个人信息">
+            <span />
+            <span />
+            <span />
+            <strong>献超前 · 河南大学软件工程本科 · 杭州</strong>
+          </div>
+          <a className="mock-button" href={`mailto:${contactEmail}`}>查看联系方式</a>
+          <small>
+            Sealos 系统组实习 → CompliK / GCFeed / SDD Agent · Go / Gin / GORM · 1500+ Problems
+          </small>
+        </div>
       </section>
     </div>
   );
@@ -465,7 +489,8 @@ function Hero() {
           <span>Agent 开发方向简历</span>
         </h1>
         <p>
-          献超前的个人主页：Agent 开发求职方向、Sealos 系统组实习、Go 后端项目、算法竞赛记录、摄影和骑行。
+          <span>献超前的个人主页：Agent 开发求职方向、Sealos 系统组实习、Go 后端项目、</span>
+          <span>算法竞赛记录、摄影和骑行。</span>
         </p>
         <a className="cta" href="mailto:xianchaoqian@foxmail.com">联系我</a>
       </div>
@@ -551,6 +576,20 @@ function About() {
 function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = useMemo(() => projects[activeIndex], [activeIndex]);
+  const activeTabId = `project-tab-${active.label}`;
+  const activePanelId = `project-panel-${active.label}`;
+  const selectProject = (index) => setActiveIndex((index + projects.length) % projects.length);
+  const handleProjectKeyDown = (event, index) => {
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      selectProject(index + 1);
+    }
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      selectProject(index - 1);
+    }
+  };
 
   return (
     <section id="projects" className="features-section">
@@ -572,11 +611,15 @@ function Projects() {
         <div className="feature-tabs" role="tablist" aria-label="项目分类">
           {projects.map((project, index) => (
             <button
+              aria-controls={`project-panel-${project.label}`}
               aria-selected={index === activeIndex}
               className={index === activeIndex ? 'active' : ''}
+              id={`project-tab-${project.label}`}
               key={project.label}
-              onClick={() => setActiveIndex(index)}
+              onClick={() => selectProject(index)}
+              onKeyDown={(event) => handleProjectKeyDown(event, index)}
               role="tab"
+              tabIndex={index === activeIndex ? 0 : -1}
               type="button"
             >
               {project.label}
@@ -584,7 +627,13 @@ function Projects() {
           ))}
         </div>
 
-        <div className="feature-stage" key={active.label}>
+        <div
+          aria-labelledby={activeTabId}
+          className="feature-stage"
+          id={activePanelId}
+          key={active.label}
+          role="tabpanel"
+        >
           <div className="feature-app">
             <aside>
               <strong>LeoninCS</strong>
@@ -616,7 +665,7 @@ function Projects() {
           <button
             aria-label="上一个项目"
             type="button"
-            onClick={() => setActiveIndex((activeIndex + projects.length - 1) % projects.length)}
+            onClick={() => selectProject(activeIndex - 1)}
           >
             ←
           </button>
@@ -624,7 +673,7 @@ function Projects() {
           <button
             aria-label="下一个项目"
             type="button"
-            onClick={() => setActiveIndex((activeIndex + 1) % projects.length)}
+            onClick={() => selectProject(activeIndex + 1)}
           >
             →
           </button>
@@ -672,7 +721,10 @@ function StorySection({ id, eyebrow, title, mutedTitle, text, cards }) {
                   <span />
                   <span className="visual-tag">记录</span>
                 </div>
-                <div className="visual-card">
+                <div
+                  className="visual-card"
+                  style={{ '--visual-image': `url(${card.image})` }}
+                >
                   <div />
                   <h4>{card.visualTitle}</h4>
                   <p>{card.visualText}</p>
@@ -748,6 +800,7 @@ function Socials() {
               </span>
               <strong>{item.name}</strong>
               <em>{item.detail}</em>
+              <small>{item.summary}</small>
             </a>
           ))}
         </div>

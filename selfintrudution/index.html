@@ -105,22 +105,40 @@
 
   <style>
     .sr-only-seo {
-      position: absolute !important;
+      position: fixed !important;
+      inset: 0 auto auto 0 !important;
       width: 1px !important;
       height: 1px !important;
       padding: 0 !important;
-      margin: -1px !important;
+      margin: 0 !important;
       overflow: hidden !important;
-      clip: rect(0, 0, 0, 0) !important;
+      clip-path: inset(50%) !important;
       white-space: nowrap !important;
       border: 0 !important;
+      pointer-events: none !important;
+      contain: strict !important;
+    }
+
+    .sr-only-seo,
+    .sr-only-seo * {
+      box-sizing: border-box !important;
+      max-width: 1px !important;
+      max-height: 1px !important;
+      min-width: 0 !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
     }
 
     .sr-only-seo * {
       display: block !important;
-      max-width: 1px !important;
-      max-height: 1px !important;
+      position: absolute !important;
+      inset: 0 auto auto 0 !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: 0 !important;
       overflow: hidden !important;
+      white-space: nowrap !important;
     }
   </style>
 </head>
