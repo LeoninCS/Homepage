@@ -2223,11 +2223,11 @@ body.is-scrolled .top-nav {
 }
 
 .hero {
-  min-height: clamp(880px, 78vw, 1080px);
+  min-height: clamp(1060px, 88vw, 1268px);
   background:
     radial-gradient(ellipse at 50% 16%, rgba(255, 255, 255, 0.075), transparent 33%),
-    radial-gradient(ellipse at 50% 66%, rgba(226, 176, 170, 0.13), transparent 45%),
-    linear-gradient(180deg, #202d30 0%, #374143 50%, #6f6062 72%, #050708 100%);
+    radial-gradient(ellipse at 50% 66%, rgba(226, 176, 170, 0.14), transparent 45%),
+    linear-gradient(180deg, #202d30 0%, #374143 50%, #6f6062 73%, #151a1b 91%, #050708 100%);
 }
 
 .hero::before {
@@ -2592,7 +2592,24 @@ body.is-scrolled .top-nav {
 }
 
 .about-section {
-  padding: 118px 0 92px;
+  position: relative;
+  padding: 78px 0 92px;
+}
+
+.about-section::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 260px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(97, 107, 103, 0.18), transparent 56%),
+    linear-gradient(180deg, rgba(10, 13, 14, 0.86), rgba(5, 7, 8, 0));
+  pointer-events: none;
+  content: "";
+}
+
+.about-section > * {
+  position: relative;
+  z-index: 1;
 }
 
 .intro-lines {
@@ -3323,16 +3340,22 @@ body.is-scrolled .top-nav {
 
 /* Fora-aligned hero preview: make the mockup read as a dark product interface. */
 .hero-device {
-  bottom: clamp(-190px, -12.6vw, -128px);
+  bottom: 0;
   width: min(960px, calc(100% - 150px));
 }
 
 .forest-foreground {
   z-index: 9;
-  bottom: -288px;
-  height: clamp(360px, 27vw, 430px);
+  bottom: 0;
+  height: clamp(430px, 25vw, 488px);
   opacity: 1;
-  filter: saturate(0.98) contrast(1.12) brightness(0.66);
+  background:
+    linear-gradient(180deg, transparent 0 68%, rgba(5, 7, 8, 0.12) 86%, var(--page-bg) 100%),
+    linear-gradient(90deg, rgba(5, 7, 8, 0.34), rgba(5, 7, 8, 0.02) 26% 70%, rgba(5, 7, 8, 0.34)),
+    url("/images/fora-hero-foreground.png") center bottom / 100% 100% no-repeat;
+  filter: saturate(0.98) contrast(1.12) brightness(0.68);
+  mask-image: radial-gradient(ellipse 24% 24% at 50% 48%, transparent 0 32%, rgba(0, 0, 0, 0.42) 54%, #000 74%);
+  -webkit-mask-image: radial-gradient(ellipse 24% 24% at 50% 48%, transparent 0 32%, rgba(0, 0, 0, 0.42) 54%, #000 74%);
 }
 
 .forest-foreground::after {
@@ -3340,8 +3363,8 @@ body.is-scrolled .top-nav {
   right: 0;
   bottom: 0;
   left: 0;
-  height: 38%;
-  background: linear-gradient(180deg, transparent, rgba(5, 7, 8, 0.62) 44%, var(--page-bg) 100%);
+  height: 18%;
+  background: linear-gradient(180deg, transparent, rgba(5, 7, 8, 0.32) 62%, var(--page-bg) 100%);
   content: "";
 }
 
@@ -3429,6 +3452,7 @@ body.is-scrolled .top-nav {
 
 @media (max-width: 560px) {
   .hero {
+    min-height: 912px;
     padding-bottom: 12px;
   }
 
@@ -3440,9 +3464,10 @@ body.is-scrolled .top-nav {
 
   .forest-foreground {
     z-index: 9;
-    bottom: -152px;
-    height: 170px;
+    bottom: 0;
+    height: 206px;
     opacity: 1;
+    background-size: auto 100%;
   }
 
   .hero-device .product-mockup,

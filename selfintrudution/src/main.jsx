@@ -272,7 +272,7 @@ function useScrollEffects() {
       const viewportHeight = window.innerHeight;
       const viewportWidth = window.innerWidth;
       const heroMotionProgress = clamp(scrollY / Math.min(760, viewportHeight * 0.92), 0, 1);
-      const forestLiftTarget = viewportWidth <= 560 ? -58 : viewportWidth <= 980 ? -84 : -118;
+      const forestLiftTarget = viewportWidth <= 560 ? -8 : viewportWidth <= 980 ? -14 : -18;
       const frontHillLiftTarget = viewportWidth <= 560 ? -22 : -34;
       const backHillLiftTarget = viewportWidth <= 560 ? -8 : -14;
 
