@@ -36,9 +36,9 @@
   --page-bg: #000;
   --page-bg-deep: #000;
   --page-bg-soft: #0f0f0fd9;
-  --hero-blue-deep: #1b2228;
-  --hero-blue-mid: #353f44;
-  --hero-warm: #d39794;
+  --hero-blue-deep: #000;
+  --hero-blue-mid: #000;
+  --hero-warm: #000;
   --hero-teal: #177275;
   --panel-bg: #171717d9;
   --line-soft: rgba(255, 255, 255, 0.09);
