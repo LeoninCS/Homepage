@@ -176,6 +176,49 @@ function useScrollEffects() {
     const root = document.documentElement;
     const handleResize = () => update();
     const rootVars = new Map();
+    let previousScrollY = window.scrollY;
+    let previousScrollTime = performance.now();
+    let scrollVelocity = 0;
+    const motion = {
+      raf: 0,
+      lastFrame: performance.now(),
+      current: {
+        backY: 0,
+        frontY: 0,
+        forestY: 0,
+        forestScale: 1,
+        heroCopyY: 0,
+        heroDeviceY: 0,
+        heroDeviceOpacity: 1,
+        heroUIOpacity: 1,
+        heroLightX: 0,
+        heroLightY: 0,
+      },
+      target: {
+        backY: 0,
+        frontY: 0,
+        forestY: 0,
+        forestScale: 1,
+        heroCopyY: 0,
+        heroDeviceY: 0,
+        heroDeviceOpacity: 1,
+        heroUIOpacity: 1,
+        heroLightX: 0,
+        heroLightY: 0,
+      },
+      velocity: {
+        backY: 0,
+        frontY: 0,
+        forestY: 0,
+        forestScale: 0,
+        heroCopyY: 0,
+        heroDeviceY: 0,
+        heroDeviceOpacity: 0,
+        heroUIOpacity: 0,
+        heroLightX: 0,
+        heroLightY: 0,
+      },
+    };
     const setRootVar = (name, value) => {
       if (rootVars.get(name) === value) {
         return;
@@ -183,6 +226,65 @@ function useScrollEffects() {
 
       rootVars.set(name, value);
       root.style.setProperty(name, value);
+    };
+    const setMotionTarget = (name, value) => {
+      motion.target[name] = value;
+    };
+    const stepSpring = (name, stiffness, damping, deltaTime) => {
+      const distance = motion.target[name] - motion.current[name];
+      const acceleration = distance * stiffness - motion.velocity[name] * damping;
+      motion.velocity[name] += acceleration * deltaTime;
+      motion.current[name] += motion.velocity[name] * deltaTime;
+
+      if (Math.abs(distance) < 0.001 && Math.abs(motion.velocity[name]) < 0.001) {
+        motion.current[name] = motion.target[name];
+        motion.velocity[name] = 0;
+        return false;
+      }
+
+      return true;
+    };
+    const renderMotion = () => {
+      const now = performance.now();
+      const deltaTime = Math.min(0.034, Math.max(0.001, (now - motion.lastFrame) / 1000));
+      motion.lastFrame = now;
+
+      const active = [
+        stepSpring('backY', 36, 12, deltaTime),
+        stepSpring('frontY', 44, 13, deltaTime),
+        stepSpring('forestY', 52, 14, deltaTime),
+        stepSpring('forestScale', 46, 13, deltaTime),
+        stepSpring('heroCopyY', 42, 13, deltaTime),
+        stepSpring('heroDeviceY', 38, 12, deltaTime),
+        stepSpring('heroDeviceOpacity', 48, 14, deltaTime),
+        stepSpring('heroUIOpacity', 48, 14, deltaTime),
+        stepSpring('heroLightX', 34, 12, deltaTime),
+        stepSpring('heroLightY', 34, 12, deltaTime),
+      ].some(Boolean);
+
+      setRootVar('--hill-back-y', `${Math.round(motion.current.backY)}px`);
+      setRootVar('--hill-front-y', `${Math.round(motion.current.frontY)}px`);
+      setRootVar('--forest-y', `${Math.round(motion.current.forestY)}px`);
+      setRootVar('--forest-scale', motion.current.forestScale.toFixed(3));
+      setRootVar('--hero-copy-y', `${Math.round(motion.current.heroCopyY)}px`);
+      setRootVar('--hero-device-y', `${Math.round(motion.current.heroDeviceY)}px`);
+      setRootVar('--hero-device-opacity', motion.current.heroDeviceOpacity.toFixed(3));
+      setRootVar('--hero-ui-opacity', motion.current.heroUIOpacity.toFixed(3));
+      setRootVar('--hero-light-x', `${Math.round(motion.current.heroLightX)}px`);
+      setRootVar('--hero-light-y', `${Math.round(motion.current.heroLightY)}px`);
+
+      if (active) {
+        motion.raf = requestAnimationFrame(renderMotion);
+        return;
+      }
+
+      motion.raf = 0;
+    };
+    const ensureMotion = () => {
+      if (!motion.raf) {
+        motion.lastFrame = performance.now();
+        motion.raf = requestAnimationFrame(renderMotion);
+      }
     };
     const revealTargets = [
       '.hero-device',
@@ -252,7 +354,9 @@ function useScrollEffects() {
       autoToggle: true,
       anchors: true,
       lerp: 0.1,
-      syncTouch: false,
+      syncTouch: true,
+      syncTouchLerp: 0.075,
+      touchInertiaExponent: 1.7,
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 1,
@@ -260,29 +364,49 @@ function useScrollEffects() {
     });
 
     window.lenis = lenis;
+    setRootVar('--hero-copy-y', '0px');
     setRootVar('--hero-device-y', '0px');
     setRootVar('--hero-device-opacity', '1');
     setRootVar('--hero-ui-opacity', '1');
+    setRootVar('--forest-scale', '1');
 
     const stackCards = [...document.querySelectorAll('.get-card')];
     const stackSection = document.querySelector('.what-section');
 
     const update = (nextScroll) => {
       const scrollY = nextScroll ?? lenis.animatedScroll ?? window.scrollY;
+      const now = performance.now();
+      const elapsed = Math.max(16, now - previousScrollTime);
+      const instantVelocity = ((scrollY - previousScrollY) / elapsed) * 16.67;
       const viewportHeight = window.innerHeight;
       const viewportWidth = window.innerWidth;
-      const heroMotionProgress = clamp(scrollY / Math.min(760, viewportHeight * 0.92), 0, 1);
-      const forestLiftTarget = viewportWidth <= 560 ? -8 : viewportWidth <= 980 ? -14 : -18;
-      const frontHillLiftTarget = viewportWidth <= 560 ? -22 : -34;
-      const backHillLiftTarget = viewportWidth <= 560 ? -8 : -14;
+      const heroTravel = Math.min(900, viewportHeight * 1.04);
+      const heroMotionProgress = clamp(scrollY / heroTravel, 0, 1);
+      const gravityProgress = Math.pow(heroMotionProgress, 1.54);
+      const settleProgress = 1 - Math.pow(1 - heroMotionProgress, 2.2);
+      const forestLiftTarget = viewportWidth <= 560 ? -68 : viewportWidth <= 980 ? -102 : -132;
+      const frontHillLiftTarget = viewportWidth <= 560 ? -38 : -58;
+      const backHillLiftTarget = viewportWidth <= 560 ? -12 : -22;
+      const copyLiftTarget = viewportWidth <= 560 ? -72 : viewportWidth <= 980 ? -86 : -104;
+      const deviceLiftTarget = viewportWidth <= 560 ? -18 : -32;
+      scrollVelocity = scrollVelocity * 0.82 + instantVelocity * 0.18;
+      previousScrollY = scrollY;
+      previousScrollTime = now;
+      const inertialPull = clamp(scrollVelocity * -1.24, -44, 28);
 
       document.body.classList.toggle('is-scrolled', scrollY > 16);
-      setRootVar('--hill-back-y', `${Math.round(heroMotionProgress * backHillLiftTarget)}px`);
-      setRootVar('--hill-front-y', `${Math.round(heroMotionProgress * frontHillLiftTarget)}px`);
-      setRootVar('--forest-y', `${Math.round(heroMotionProgress * forestLiftTarget)}px`);
-      setRootVar('--hero-light-x', `${Math.round((heroMotionProgress - 0.5) * 22)}px`);
-      setRootVar('--hero-light-y', `${Math.round(heroMotionProgress * -22)}px`);
+      setMotionTarget('backY', gravityProgress * backHillLiftTarget + inertialPull * 0.08);
+      setMotionTarget('frontY', gravityProgress * frontHillLiftTarget + inertialPull * 0.24);
+      setMotionTarget('forestY', gravityProgress * forestLiftTarget + inertialPull);
+      setMotionTarget('forestScale', 1 + settleProgress * 0.038 + clamp(Math.abs(scrollVelocity) * 0.0008, 0, 0.016));
+      setMotionTarget('heroCopyY', settleProgress * copyLiftTarget + inertialPull * 0.16);
+      setMotionTarget('heroDeviceY', gravityProgress * deviceLiftTarget + inertialPull * 0.18);
+      setMotionTarget('heroDeviceOpacity', 1 - Math.min(heroMotionProgress * 0.08, 0.08));
+      setMotionTarget('heroUIOpacity', 1 - Math.min(heroMotionProgress * 0.18, 0.18));
+      setMotionTarget('heroLightX', (heroMotionProgress - 0.5) * 22);
+      setMotionTarget('heroLightY', heroMotionProgress * -22);
       setRootVar('--final-glow-y', `${Math.round(scrollY * -0.018)}px`);
+      ensureMotion();
 
       if (!stackSection) {
         return;
@@ -317,6 +441,9 @@ function useScrollEffects() {
       mutationObserver.disconnect();
       if (window.lenis === lenis) {
         delete window.lenis;
+      }
+      if (motion.raf) {
+        cancelAnimationFrame(motion.raf);
       }
       lenis.destroy();
       window.removeEventListener('resize', handleResize);
