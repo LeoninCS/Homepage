@@ -5,8 +5,8 @@
   <meta charset="UTF-8" />
   <link rel="preload" as="image" href="textures/paper-texture.webp" type="image/webp" fetchpriority="high"
     crossorigin="anonymous">
-  <link rel="icon" type="image/png" href="favico.png" />
-  <link rel="apple-touch-icon" href="favico.png" />
+  <link rel="icon" type="image/jpeg" href="picture/lc.jpg" />
+  <link rel="apple-touch-icon" href="picture/lc.jpg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#fafafa" />
 
