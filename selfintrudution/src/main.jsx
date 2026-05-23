@@ -6,6 +6,8 @@ import { SiXiaohongshu } from 'react-icons/si';
 import 'lenis/dist/lenis.css';
 import './styles.css';
 
+const avatarImage = '/picture/lc.jpg';
+
 const projects = [
   {
     label: 'Feed',
@@ -454,7 +456,9 @@ function useScrollEffects() {
 function Logo() {
   return (
     <a className="logo" href="#hero" aria-label="回到首页">
-      <span>LC</span>
+      <span>
+        <img src={avatarImage} alt="LeoninCS 头像" />
+      </span>
       <strong>LeoninCS.</strong>
     </a>
   );
@@ -586,9 +590,11 @@ function ResumeMockup({ compact = false }) {
       </aside>
       <section className="mock-panel">
         <div className="mock-community">
-          <div className="mock-avatar">LC</div>
+          <div className="mock-avatar">
+            <img src={avatarImage} alt="LeoninCS 头像" />
+          </div>
           <h3>LeoninCS</h3>
-          <p>Agent 开发方向简历</p>
+          <p>Profile Page</p>
           <div className="mock-members" aria-label="个人信息">
             <span />
             <span />
@@ -597,7 +603,7 @@ function ResumeMockup({ compact = false }) {
           </div>
           <a className="mock-button" href={`mailto:${contactEmail}`}>查看联系方式</a>
           <small>
-            Sealos 系统组实习 → CompliK / GCFeed / SDD Agent · Go / Gin / GORM · 1500+ Problems
+            河大软件工程 → 算法竞赛 → Go 后端 → Sealos 实习 → 持续学习
           </small>
         </div>
       </section>
@@ -611,13 +617,11 @@ function Hero() {
       <div className="hero-bg hills-back" />
       <div className="hero-copy reveal">
         <h1>
-          <span>LeoninCS</span>
-          <span className="hero-separator">/</span>
-          <span>Agent 开发方向简历</span>
+          <span>LeoninCS Profile</span>
         </h1>
         <p>
-          <span>献超前的个人主页：Agent 开发求职方向、Sealos 系统组实习、Go 后端项目、</span>
-          <span>算法竞赛记录、摄影和骑行。</span>
+          <span>欢迎来到布洛克琴的主页，这里记录了我的个人信息与项目经历，</span>
+          <span>希望能帮助您更好地了解我。</span>
         </p>
         <a className="cta" href="mailto:xianchaoqian@foxmail.com">联系我</a>
       </div>
