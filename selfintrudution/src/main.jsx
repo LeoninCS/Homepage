@@ -7,6 +7,11 @@ import 'lenis/dist/lenis.css';
 import './styles.css';
 
 const avatarImage = '/picture/lc.jpg';
+const mockMemberIcons = [
+  { src: '/images/brand/go-gopher.svg', alt: 'Go 吉祥物图标' },
+  { src: '/images/brand/github-mark.svg', alt: 'GitHub 图标' },
+  { src: '/images/brand/labring.png', alt: 'LabRing 图标' },
+];
 
 const projects = [
   {
@@ -44,8 +49,8 @@ const profileRows = [
   ['技术 ID', 'LeoninCS'],
   ['学校', '河南大学 软件工程本科在读 · 开封'],
   ['当前工作地', '杭州，中国'],
-  ['求职方向', 'Agent 开发'],
-  ['技术方向', 'Go · Gin · GORM · 云原生 · AI Agent'],
+  ['求职方向', '开发工程师'],
+  ['技术方向', 'Go后端 · AI Agent · 云原生'],
 ];
 
 const internshipCards = [
@@ -596,9 +601,11 @@ function ResumeMockup({ compact = false }) {
           <h3>LeoninCS</h3>
           <p>Profile Page</p>
           <div className="mock-members" aria-label="个人信息">
-            <span />
-            <span />
-            <span />
+            {mockMemberIcons.map((icon) => (
+              <span key={icon.alt}>
+                <img src={icon.src} alt={icon.alt} />
+              </span>
+            ))}
             <strong>献超前 · 河南大学软件工程本科 · 杭州</strong>
           </div>
           <a className="mock-button" href={`mailto:${contactEmail}`}>查看联系方式</a>
@@ -638,9 +645,10 @@ function About() {
   const sectionRef = useRef(null);
   const [activeLine, setActiveLine] = useState(0);
   const lines = [
-    '我是献超前，技术 ID 是 LeoninCS，河南大学软件工程本科在读，学校在开封，目前在杭州工作，求职方向是 Agent 开发。',
-    '我的工程主线围绕 Go、Gin、GORM、云原生、Kubernetes、Sealos、AI Agent 和分布式系统展开。',
-    '除了工程经历，我也长期记录骑行、摄影、音乐 HiFi、投资观察和商业模式研究，让个人页面保留真实的生活纹理。',
+    '我是献超前，技术 ID 为 LeoninCS，河南大学软件工程专业本科在读，预计于 2027 年毕业。目前在杭州一家开源初创公司实习，持续参与实际工程项目与开源相关工作。',
+    'AI重度患者，日均上亿token用量；DevOps理念践行者，具备Go后端、AI Agent开发能力、Docker、Kubernetes等云原生技术部署运维能力，并具备实际项目落地经验；',
+    '开源贡献者，维护Sealos合规组件，个人项目github累计350+star；技术内容创作者，全网累计1500+粉丝，1.5w+点赞收藏数;Web3信徒，认同去中心化的理念。',
+    '生活中，我喜欢 骑行、摄影与 Hi-Fi，也常听 Hip Hop 和 R&B。除此之外，我对投资理财也有一定兴趣，主要关注美股与加密货币，保持对技术与生活的长期探索。',
   ];
 
   useEffect(() => {

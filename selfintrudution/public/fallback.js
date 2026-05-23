@@ -10,14 +10,14 @@ const rooms = {
     kind: 'about',
     label: '简介',
     title: '个人简介',
-    body: '献超前 / Xianchao Qian，技术 ID 为 LeoninCS，河南大学软件工程本科在读，学校在开封，目前在杭州工作，求职方向为 Agent 开发。',
+    body: '我是献超前，技术 ID 为 LeoninCS，河南大学软件工程专业本科在读，预计于 2027 年毕业。目前在杭州一家开源初创公司实习，持续参与实际工程项目与开源相关工作。AI重度患者，日均上亿token用量；DevOps理念践行者，具备Go后端、AI Agent开发能力、Docker、Kubernetes等云原生技术部署运维能力，并具备实际项目落地经验；开源贡献者，维护Sealos合规组件，个人项目github累计350+star；技术内容创作者，全网累计1500+粉丝，1.5w+点赞收藏数;Web3信徒，认同去中心化的理念。生活中，我喜欢 骑行、摄影与 Hi-Fi，也常听 Hip Hop 和 R&B。除此之外，我对投资理财也有一定兴趣，主要关注美股与加密货币，保持对技术与生活的长期探索。',
     hero: '/textures/contact/paper_form.webp',
     heroAlt: '手绘简历纸张',
     items: [
       { title: '姓名', text: '献超前 / Xianchao Qian / LeoninCS', image: '/textures/contact/send_button.webp', type: 'icon', alt: '姓名入口图标' },
       { title: '学校', text: '河南大学软件工程本科在读，开封', image: '/textures/about/SOTDAYYOUNGMULTIORPETRON.webp', type: 'object', alt: '学校记录卡' },
       { title: '联系方式', text: 'xianchaoqian@foxmail.com / GitHub: LeoninCS', image: '/textures/studio/phone_front_painted.webp', type: 'object', alt: '联系方式展示屏' },
-      { title: '方向', text: 'Agent 开发、Go、Gin、GORM、云原生、AI Agent', image: '/textures/contact/latarnia.webp', type: 'object', alt: '方向灯塔' },
+      { title: '方向', text: 'Go 后端、AI Agent、DevOps、GoWeb、Docker、Kubernetes、云原生部署运维', image: '/textures/contact/latarnia.webp', type: 'object', alt: '方向灯塔' },
     ],
   },
   gallery: {
