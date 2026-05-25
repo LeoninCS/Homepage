@@ -915,9 +915,6 @@ function Socials() {
           <div>
             <span className="pill muted">社媒账号</span>
             <h2>不同平台展示不同侧面。</h2>
-            <p>
-              GitHub 放工程项目，X 放观察记录，Bilibili 放视频内容，Instagram 和小红书放摄影、骑行和生活动态。
-            </p>
           </div>
         </div>
 
@@ -941,9 +938,9 @@ function FinalCTA() {
     <section className="final-section">
       <div className="section-inner final-inner">
         <div className="final-copy">
-          <h2>Agent 开发沟通，从这里开始。</h2>
+          <h2>沟通与协作，从这里开始。</h2>
           <p>
-            简历投递、面试沟通、Agent 开发机会和开源协作可以直接通过邮箱联系。
+            岗位沟通、面试安排、工程机会、技术交流和开源协作可以直接通过邮箱联系。
           </p>
           <a className="cta" href={`mailto:${contactEmail}`}>发送邮件</a>
         </div>
