@@ -1281,6 +1281,7 @@ body.is-scrolled .top-nav {
 .social-strip a {
   display: grid;
   align-content: center;
+  justify-items: center;
   gap: 18px;
   min-height: 126px;
   padding: 24px;
@@ -1342,6 +1343,7 @@ body.is-scrolled .top-nav {
   color: #fff3f0;
   font-size: 22px;
   font-weight: 560;
+  text-align: center;
 }
 
 .faq-layout {
@@ -2137,10 +2139,11 @@ body.is-scrolled .top-nav {
 
   .social-strip a {
     display: grid;
-    grid-template-columns: 48px 1fr;
-    column-gap: 14px;
-    align-items: center;
-    min-height: 82px;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-content: center;
+    gap: 14px;
+    min-height: 112px;
     padding: 18px;
   }
 
@@ -3340,11 +3343,12 @@ body.is-scrolled .top-nav {
   }
 
   .social-strip a {
-    grid-template-columns: 48px 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: auto;
-    min-height: 82px;
-    column-gap: 14px;
-    align-items: center;
+    justify-items: center;
+    align-content: center;
+    min-height: 112px;
+    gap: 14px;
     padding: 18px;
   }
 
