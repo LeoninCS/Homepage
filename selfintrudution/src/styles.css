@@ -1280,8 +1280,10 @@ body.is-scrolled .top-nav {
 
 .social-strip a {
   display: grid;
-  min-height: 158px;
-  padding: 22px;
+  align-content: center;
+  gap: 18px;
+  min-height: 126px;
+  padding: 24px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 16px;
@@ -1337,19 +1339,9 @@ body.is-scrolled .top-nav {
 }
 
 .social-strip strong {
-  align-self: end;
   color: #fff3f0;
   font-size: 22px;
   font-weight: 560;
-}
-
-.social-strip em {
-  margin-top: 8px;
-  color: rgba(255, 255, 255, 0.56);
-  font-size: 14px;
-  font-style: normal;
-  line-height: 1.45;
-  overflow-wrap: anywhere;
 }
 
 .faq-layout {
@@ -2001,7 +1993,7 @@ body.is-scrolled .top-nav {
   }
 
   .social-strip a {
-    min-height: 138px;
+    min-height: 108px;
   }
 
   .feature-stage {
@@ -2148,21 +2140,16 @@ body.is-scrolled .top-nav {
     grid-template-columns: 48px 1fr;
     column-gap: 14px;
     align-items: center;
-    min-height: 96px;
+    min-height: 82px;
     padding: 18px;
   }
 
   .social-strip span {
-    grid-row: span 2;
+    grid-row: auto;
   }
 
   .social-strip strong {
-    align-self: end;
     font-size: 20px;
-  }
-
-  .social-strip em {
-    margin-top: 3px;
   }
 
   .final-section,
@@ -2765,8 +2752,7 @@ body.is-scrolled .top-nav {
 
 .feature-caption p,
 .get-copy p,
-.get-copy strong,
-.social-strip small {
+.get-copy strong {
   color: rgba(255, 255, 255, 0.68);
 }
 
@@ -2895,6 +2881,22 @@ body.is-scrolled .top-nav {
   content: "";
 }
 
+#internship .get-card {
+  height: 468px;
+  min-height: 468px;
+}
+
+#internship .visual-card {
+  width: min(440px, 88%);
+  min-height: 352px;
+  margin-top: 26px;
+}
+
+#internship .visual-card div {
+  width: 68px;
+  height: 68px;
+}
+
 .faq-section {
   padding: 88px 0 76px;
 }
@@ -2909,16 +2911,10 @@ body.is-scrolled .top-nav {
 }
 
 .social-strip a {
-  grid-template-rows: auto 1fr auto auto;
-  min-height: 166px;
+  grid-template-rows: auto;
+  min-height: 116px;
   padding: 20px;
   border-radius: 14px;
-}
-
-.social-strip small {
-  margin-top: 8px;
-  font-size: 13px;
-  line-height: 1.45;
 }
 
 .final-section,
@@ -2968,6 +2964,11 @@ body.is-scrolled .top-nav {
   .get-card,
   .get-card:nth-child(even) {
     grid-template-columns: 1fr;
+    height: auto;
+    min-height: 0;
+  }
+
+  #internship .get-card {
     height: auto;
     min-height: 0;
   }
@@ -3319,6 +3320,15 @@ body.is-scrolled .top-nav {
     padding: 22px;
   }
 
+  #internship .get-visual {
+    min-height: 340px;
+  }
+
+  #internship .visual-card {
+    min-height: 300px;
+    margin-top: 0;
+  }
+
   .visual-card h4 {
     font-size: 25px;
   }
@@ -3331,20 +3341,15 @@ body.is-scrolled .top-nav {
 
   .social-strip a {
     grid-template-columns: 48px 1fr;
-    grid-template-rows: auto auto auto;
-    min-height: 118px;
+    grid-template-rows: auto;
+    min-height: 82px;
     column-gap: 14px;
     align-items: center;
     padding: 18px;
   }
 
   .social-strip span {
-    grid-row: span 2;
-  }
-
-  .social-strip small {
-    grid-column: 2;
-    margin-top: 6px;
+    grid-row: auto;
   }
 
   .final-section,

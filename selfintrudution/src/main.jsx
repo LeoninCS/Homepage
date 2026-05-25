@@ -56,12 +56,12 @@ const profileRows = [
 const internshipCards = [
   {
     eyebrow: '实习经历',
-    title: 'Sealos 系统组实习，参与 CompliK 集群合规系统建设。',
-    text: '负责 Admin 面板全栈开发、Admin 与 CompliK 适配、CompliK CI 搭建、多端分析插件、ProcScan 二进制分析和系统迭代维护。',
+    title: 'Sealos 系统组实习，负责 Sealos 集群合规组件建设。',
+    text: '负责 Admin 面板全栈开发、Admin 与 CompliK 适配、CompliK CI/CD 搭建、多端分析插件、ProcScan 二进制分析和系统迭代维护与优化。',
     note: '关键词：Admin、CI、合规扫描、ProcScan、系统适配。',
-    visualTitle: 'CompliK Admin',
+    visualTitle: 'CompliK',
     visualText: 'Admin / CI / ProcScan / Plugin',
-    image: '/picture/35-programming-contest-team-photo.jpg',
+    image: '/picture/complik.jpg',
   },
 ];
 
@@ -140,37 +140,27 @@ const socials = [
   {
     name: 'GitHub',
     href: 'https://github.com/LeoninCS',
-    detail: 'github.com/LeoninCS',
     Icon: FaGithub,
-    summary: '代码、开源项目和工程记录',
   },
   {
     name: 'X',
     href: 'https://x.com/xxxmvp2',
-    detail: 'x.com/xxxmvp2',
     Icon: FaXTwitter,
-    summary: '观点、技术观察和理财记录',
   },
   {
     name: 'Bilibili',
     href: 'https://space.bilibili.com/491359383',
-    detail: 'space.bilibili.com/491359383',
     Icon: FaBilibili,
-    summary: '视频内容与生活记录',
   },
   {
     name: 'Instagram',
     href: 'https://www.instagram.com/forever_mvp0?igsh=MXhnNjA3ZjFkbTZwbg==',
-    detail: 'forever_mvp0',
     Icon: FaInstagram,
-    summary: '摄影与旅途照片',
   },
   {
     name: '小红书',
     href: 'https://xhslink.com/m/68F5FSoWMxt',
-    detail: 'xhslink.com/m/68F5FSoWMxt',
     Icon: SiXiaohongshu,
-    summary: '骑行、摄影和生活方式',
   },
 ];
 
@@ -884,8 +874,8 @@ function Internship() {
       id="internship"
       eyebrow="实习经历"
       title="实习内容落在真实系统里。"
-      mutedTitle=" 从 Admin 到 ProcScan。"
-      text="这一块集中展示 Sealos 系统组的 CompliK 实习经历：Admin 全栈、系统适配、CI、分析插件、二进制分析和持续维护。"
+      mutedTitle=" 从Admin到CompliK。"
+      text="这一块集中展示 Sealos 系统组的实习经历：负责了Sealos的集群合规组件，主要有海外合规、Admin 全栈、搭建CI/CD、多端分析插件、二进制进程分析和持续维护与优化。"
       cards={internshipCards}
     />
   );
@@ -938,8 +928,6 @@ function Socials() {
                 <item.Icon />
               </span>
               <strong>{item.name}</strong>
-              <em>{item.detail}</em>
-              <small>{item.summary}</small>
             </a>
           ))}
         </div>
