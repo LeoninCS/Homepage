@@ -1284,7 +1284,7 @@ body.is-scrolled .top-nav {
   justify-items: center;
   gap: 18px;
   min-height: 126px;
-  padding: 24px;
+  padding: 34px 24px 18px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 16px;
@@ -2144,7 +2144,7 @@ body.is-scrolled .top-nav {
     align-content: center;
     gap: 14px;
     min-height: 112px;
-    padding: 18px;
+    padding: 26px 18px 12px;
   }
 
   .social-strip span {
@@ -3358,7 +3358,7 @@ body.is-scrolled .top-nav {
     align-content: center;
     min-height: 112px;
     gap: 14px;
-    padding: 18px;
+    padding: 26px 18px 12px;
   }
 
   .social-strip span {
