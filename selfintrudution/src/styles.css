@@ -2890,14 +2890,23 @@ body.is-scrolled .top-nav {
 }
 
 #internship .visual-card {
+  align-content: center;
   width: min(440px, 88%);
   min-height: 352px;
   margin-top: 26px;
+  justify-items: center;
+  text-align: center;
 }
 
 #internship .visual-card div {
   width: 68px;
   height: 68px;
+}
+
+#internship .visual-card h4,
+#internship .visual-card p {
+  max-width: none;
+  text-align: center;
 }
 
 .faq-section {
