@@ -1251,7 +1251,7 @@ body.is-scrolled .top-nav {
 }
 
 .faq-section {
-  padding: 118px 0 130px;
+  padding: 118px 0 88px;
   background: var(--page-bg);
 }
 
@@ -1275,7 +1275,7 @@ body.is-scrolled .top-nav {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 14px;
-  margin-top: 62px;
+  margin-top: 132px;
 }
 
 .social-strip a {
@@ -1991,7 +1991,7 @@ body.is-scrolled .top-nav {
 
   .social-strip {
     grid-template-columns: 1fr;
-    margin-top: 56px;
+    margin-top: 72px;
   }
 
   .social-strip a {
