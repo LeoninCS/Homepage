@@ -121,7 +121,7 @@ const hobbyCards = [
     visualTitle: 'Music / HiFi',
     visualText: 'R&B / Jazz / Hip-Hop / Pop',
     note: '把听感当作一种审美训练。',
-    image: '/picture/02-riverside-lit-bridge-night.jpg',
+    image: '/picture/ie200.png',
   },
   {
     eyebrow: '投资观察',
@@ -130,7 +130,7 @@ const hobbyCards = [
     visualTitle: 'Finance Notes',
     visualText: '商业模式 / 现金流 / 技术趋势',
     note: '用结构化记录训练信息判断。',
-    image: '/picture/01-city-tower-blue-hour.jpg',
+    image: '/picture/nasdaq.png',
   },
 ];
 
