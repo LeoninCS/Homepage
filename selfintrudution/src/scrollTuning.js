@@ -1,5 +1,6 @@
 const baseLenisOptions = {
   lerp: 0.1,
+  syncTouch: true,
   syncTouchLerp: 0.075,
   touchInertiaExponent: 1.7,
   wheelMultiplier: 1,
@@ -26,22 +27,23 @@ const desktopScrollTuning = {
 const mobileScrollTuning = {
   lenis: {
     ...baseLenisOptions,
-    syncTouchLerp: 0.12,
-    touchInertiaExponent: 1.42,
-    touchMultiplier: 1.08,
+    syncTouch: false,
+    syncTouchLerp: 0,
+    touchInertiaExponent: 1,
+    touchMultiplier: 1,
   },
   spring: {
-    stiffnessScale: 1.06,
-    dampingScale: 0.78,
+    stiffnessScale: 1.12,
+    dampingScale: 0.64,
   },
   inertia: {
-    velocityRetain: 0.74,
-    velocityInject: 0.26,
-    pullMultiplier: -0.84,
-    pullMin: -30,
-    pullMax: 20,
-    forestScaleVelocity: 0.0005,
-    forestScaleMax: 0.011,
+    velocityRetain: 0.62,
+    velocityInject: 0.38,
+    pullMultiplier: -0.36,
+    pullMin: -14,
+    pullMax: 10,
+    forestScaleVelocity: 0.00028,
+    forestScaleMax: 0.006,
   },
 };
 

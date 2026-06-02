@@ -356,7 +356,7 @@ function useScrollEffects() {
       autoToggle: true,
       anchors: true,
       lerp: scrollTuning.lenis.lerp,
-      syncTouch: true,
+      syncTouch: scrollTuning.lenis.syncTouch,
       syncTouchLerp: scrollTuning.lenis.syncTouchLerp,
       touchInertiaExponent: scrollTuning.lenis.touchInertiaExponent,
       smoothWheel: true,
