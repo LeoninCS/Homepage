@@ -5,6 +5,7 @@ import { FaBilibili, FaGithub, FaInstagram, FaXTwitter } from 'react-icons/fa6';
 import { SiXiaohongshu } from 'react-icons/si';
 import 'lenis/dist/lenis.css';
 import './styles.css';
+import { getScrollTuning } from './scrollTuning.js';
 
 const avatarImage = '/picture/lc.jpg';
 const mockMemberIcons = [
@@ -171,8 +172,10 @@ function clamp(value, min, max) {
 function useScrollEffects() {
   useEffect(() => {
     const root = document.documentElement;
-    const handleResize = () => update();
     const rootVars = new Map();
+    const mobileQuery = window.matchMedia('(max-width: 768px), (pointer: coarse)');
+    let scrollTuning = getScrollTuning(mobileQuery.matches);
+    const handleResize = () => update();
     let previousScrollY = window.scrollY;
     let previousScrollTime = performance.now();
     let scrollVelocity = 0;
@@ -229,7 +232,9 @@ function useScrollEffects() {
     };
     const stepSpring = (name, stiffness, damping, deltaTime) => {
       const distance = motion.target[name] - motion.current[name];
-      const acceleration = distance * stiffness - motion.velocity[name] * damping;
+      const acceleration =
+        distance * stiffness * scrollTuning.spring.stiffnessScale -
+        motion.velocity[name] * damping * scrollTuning.spring.dampingScale;
       motion.velocity[name] += acceleration * deltaTime;
       motion.current[name] += motion.velocity[name] * deltaTime;
 
@@ -350,13 +355,13 @@ function useScrollEffects() {
       autoRaf: true,
       autoToggle: true,
       anchors: true,
-      lerp: 0.1,
+      lerp: scrollTuning.lenis.lerp,
       syncTouch: true,
-      syncTouchLerp: 0.075,
-      touchInertiaExponent: 1.7,
+      syncTouchLerp: scrollTuning.lenis.syncTouchLerp,
+      touchInertiaExponent: scrollTuning.lenis.touchInertiaExponent,
       smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1,
+      wheelMultiplier: scrollTuning.lenis.wheelMultiplier,
+      touchMultiplier: scrollTuning.lenis.touchMultiplier,
       overscroll: true,
     });
 
@@ -371,6 +376,8 @@ function useScrollEffects() {
     const stackSection = document.querySelector('.what-section');
 
     const update = (nextScroll) => {
+      scrollTuning = getScrollTuning(mobileQuery.matches);
+      Object.assign(lenis.options, scrollTuning.lenis);
       const scrollY = nextScroll ?? lenis.animatedScroll ?? window.scrollY;
       const now = performance.now();
       const elapsed = Math.max(16, now - previousScrollTime);
@@ -386,16 +393,31 @@ function useScrollEffects() {
       const backHillLiftTarget = viewportWidth <= 560 ? -12 : -22;
       const copyLiftTarget = viewportWidth <= 560 ? -72 : viewportWidth <= 980 ? -86 : -104;
       const deviceLiftTarget = viewportWidth <= 560 ? -18 : -32;
-      scrollVelocity = scrollVelocity * 0.82 + instantVelocity * 0.18;
+      scrollVelocity =
+        scrollVelocity * scrollTuning.inertia.velocityRetain +
+        instantVelocity * scrollTuning.inertia.velocityInject;
       previousScrollY = scrollY;
       previousScrollTime = now;
-      const inertialPull = clamp(scrollVelocity * -1.24, -44, 28);
+      const inertialPull = clamp(
+        scrollVelocity * scrollTuning.inertia.pullMultiplier,
+        scrollTuning.inertia.pullMin,
+        scrollTuning.inertia.pullMax,
+      );
 
       document.body.classList.toggle('is-scrolled', scrollY > 16);
       setMotionTarget('backY', gravityProgress * backHillLiftTarget + inertialPull * 0.08);
       setMotionTarget('frontY', gravityProgress * frontHillLiftTarget + inertialPull * 0.24);
       setMotionTarget('forestY', gravityProgress * forestLiftTarget + inertialPull);
-      setMotionTarget('forestScale', 1 + settleProgress * 0.038 + clamp(Math.abs(scrollVelocity) * 0.0008, 0, 0.016));
+      setMotionTarget(
+        'forestScale',
+        1 +
+          settleProgress * 0.038 +
+          clamp(
+            Math.abs(scrollVelocity) * scrollTuning.inertia.forestScaleVelocity,
+            0,
+            scrollTuning.inertia.forestScaleMax,
+          ),
+      );
       setMotionTarget('heroCopyY', settleProgress * copyLiftTarget + inertialPull * 0.16);
       setMotionTarget('heroDeviceY', gravityProgress * deviceLiftTarget + inertialPull * 0.18);
       setMotionTarget('heroDeviceOpacity', 1 - Math.min(heroMotionProgress * 0.08, 0.08));
