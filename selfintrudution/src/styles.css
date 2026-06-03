@@ -1481,8 +1481,8 @@ body.is-scrolled .top-nav {
   inset: 0;
   display: block;
   background:
-    radial-gradient(ellipse 82% 52% at 50% 52%, transparent 42%, var(--final-edge-shade) 100%),
-    linear-gradient(180deg, #050505 0%, transparent 28%, transparent 74%, rgba(5, 5, 5, 0.42) 100%);
+    radial-gradient(ellipse 92% 60% at 50% 78%, transparent 52%, rgba(0, 0, 0, 0.24) 100%),
+    linear-gradient(180deg, transparent 0%, transparent 82%, rgba(5, 5, 5, 0.38) 100%);
   content: "";
   pointer-events: none;
 }
@@ -2923,7 +2923,51 @@ body.is-scrolled .top-nav {
 }
 
 .faq-section {
-  padding: 88px 0 76px;
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  overflow: visible;
+  padding: 88px 0 188px;
+  --final-spotlight: rgba(255, 243, 240, 0.18);
+  --final-spotlight-cool: rgba(127, 166, 166, 0.1);
+  --final-edge-shade: rgba(0, 0, 0, 0.58);
+  background: transparent;
+}
+
+.faq-section::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: -520px;
+  left: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 56% 54% at 50% 86%, var(--final-spotlight), transparent 70%),
+    radial-gradient(ellipse 76% 58% at 50% 92%, var(--final-spotlight-cool), transparent 78%),
+    linear-gradient(180deg, var(--page-bg) 0%, #020303 48%, #070b0b 72%, #101717 100%);
+  content: "";
+  pointer-events: none;
+}
+
+.faq-section::after {
+  position: absolute;
+  top: 12%;
+  right: 0;
+  bottom: -520px;
+  left: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 64% 58% at 50% 52%, rgba(255, 255, 255, 0.14), transparent 70%),
+    radial-gradient(ellipse 86% 72% at 50% 70%, rgba(255, 243, 240, 0.085), transparent 78%),
+    radial-gradient(ellipse 108% 68% at 50% 94%, rgba(127, 166, 166, 0.09), transparent 74%);
+  opacity: 0.78;
+  content: "";
+  pointer-events: none;
+}
+
+.faq-section .section-inner {
+  position: relative;
+  z-index: 1;
 }
 
 .faq-heading h2 {
@@ -2931,6 +2975,7 @@ body.is-scrolled .top-nav {
 }
 
 .social-strip {
+  position: relative;
   gap: 12px;
   margin-top: 44px;
 }
@@ -2940,6 +2985,13 @@ body.is-scrolled .top-nav {
   min-height: 116px;
   padding: 20px;
   border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 243, 240, 0.13), transparent 52%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.074), rgba(255, 255, 255, 0.02)),
+    rgba(12, 17, 18, 0.82);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.09),
+    0 22px 64px rgba(0, 0, 0, 0.28);
 }
 
 .final-section,
@@ -2955,10 +3007,14 @@ body.is-scrolled .top-nav {
   --final-spotlight: rgba(255, 243, 240, 0.18);
   --final-spotlight-cool: rgba(127, 166, 166, 0.1);
   --final-edge-shade: rgba(0, 0, 0, 0.58);
-  background:
-    radial-gradient(ellipse 42% 30% at 50% 48%, var(--final-spotlight), transparent 64%),
-    radial-gradient(ellipse 64% 42% at 50% 54%, var(--final-spotlight-cool), transparent 72%),
-    linear-gradient(180deg, #050505 0%, #080b0b 22%, #101717 68%, #141a1b 100%);
+  z-index: 2;
+  margin-top: -150px;
+  padding-top: 150px;
+  background: transparent;
+}
+
+.final-section::before {
+  display: none;
 }
 
 .final-section::after {
@@ -2966,8 +3022,7 @@ body.is-scrolled .top-nav {
   inset: 0;
   display: block;
   background:
-    radial-gradient(ellipse 82% 52% at 50% 52%, transparent 42%, var(--final-edge-shade) 100%),
-    linear-gradient(180deg, #050505 0%, transparent 28%, transparent 74%, rgba(5, 5, 5, 0.42) 100%);
+    linear-gradient(180deg, transparent 0%, transparent 82%, rgba(5, 5, 5, 0.38) 100%);
   content: "";
   pointer-events: none;
 }
@@ -3415,6 +3470,10 @@ body.is-scrolled .top-nav {
 }
 
 /* Fora-aligned hero preview: make the mockup read as a dark product interface. */
+.hero {
+  min-height: clamp(1140px, 88vw, 1348px);
+}
+
 .hero-device {
   bottom: -44px;
   width: min(960px, calc(100% - 150px));
@@ -3452,7 +3511,7 @@ body.is-scrolled .top-nav {
 .hero-device .product-mockup,
 .hero-device .mock-sidebar,
 .product-mockup {
-  min-height: 740px;
+  min-height: 820px;
   background:
     radial-gradient(ellipse at 70% 20%, rgba(255, 243, 240, 0.34), transparent 31%),
     radial-gradient(ellipse at 86% 38%, rgba(211, 151, 148, 0.42), transparent 34%),
@@ -3493,7 +3552,7 @@ body.is-scrolled .top-nav {
   align-self: center;
   justify-self: center;
   width: min(500px, 74%);
-  margin-top: -216px;
+  margin-top: -256px;
   text-align: center;
 }
 
@@ -3536,7 +3595,7 @@ body.is-scrolled .top-nav {
 
 @media (max-width: 560px) {
   .hero {
-    min-height: 912px;
+    min-height: 992px;
     padding-bottom: 12px;
   }
 
@@ -3559,7 +3618,7 @@ body.is-scrolled .top-nav {
   .hero-device .mock-sidebar,
   .product-mockup {
     grid-template-columns: 48px minmax(0, 1fr);
-    min-height: 510px;
+    min-height: 590px;
   }
 
   .mock-color-field {
@@ -3571,7 +3630,7 @@ body.is-scrolled .top-nav {
   .mock-sidebar {
     grid-template-columns: 1fr;
     align-content: start;
-    min-height: 452px;
+    min-height: 532px;
     padding: 18px 12px;
   }
 
@@ -3591,7 +3650,7 @@ body.is-scrolled .top-nav {
     align-self: center;
     width: auto;
     min-height: 0;
-    margin: -124px 12px 0;
+    margin: -164px 12px 0;
   }
 
   .mock-community {
