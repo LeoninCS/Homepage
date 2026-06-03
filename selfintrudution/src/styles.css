@@ -1451,19 +1451,25 @@ body.is-scrolled .top-nav {
   position: relative;
   min-height: 520px;
   overflow: hidden;
+  --final-spotlight: rgba(255, 243, 240, 0.18);
+  --final-spotlight-cool: rgba(127, 166, 166, 0.1);
+  --final-edge-shade: rgba(0, 0, 0, 0.58);
   background:
-    radial-gradient(ellipse at 50% 24%, rgba(211, 151, 148, 0.1), transparent 36%),
-    var(--page-bg);
+    radial-gradient(ellipse 42% 30% at 50% 48%, var(--final-spotlight), transparent 64%),
+    radial-gradient(ellipse 64% 42% at 50% 54%, var(--final-spotlight-cool), transparent 72%),
+    linear-gradient(180deg, #050505 0%, #080b0b 22%, #101717 68%, #141a1b 100%);
 }
 
 .final-section::before {
   position: absolute;
-  inset: -24% -8% auto;
-  height: 68%;
+  inset: 0;
+  height: auto;
   background:
-    radial-gradient(ellipse at 50% 10%, rgba(255, 243, 240, 0.18), transparent 28%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0));
-  opacity: 0.34;
+    radial-gradient(ellipse 40% 26% at 50% 50%, rgba(255, 255, 255, 0.2), transparent 58%),
+    radial-gradient(ellipse 58% 36% at 50% 56%, rgba(255, 243, 240, 0.1), transparent 70%);
+  opacity: 0.44;
+  mask-image: radial-gradient(ellipse 58% 46% at 50% 52%, #000 0%, rgba(0, 0, 0, 0.52) 58%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 58% 46% at 50% 52%, #000 0%, rgba(0, 0, 0, 0.52) 58%, transparent 100%);
   transform: translateY(var(--final-glow-y));
   content: "";
   pointer-events: none;
@@ -1471,7 +1477,14 @@ body.is-scrolled .top-nav {
 }
 
 .final-section::after {
-  display: none;
+  position: absolute;
+  inset: 0;
+  display: block;
+  background:
+    radial-gradient(ellipse 82% 52% at 50% 52%, transparent 42%, var(--final-edge-shade) 100%),
+    linear-gradient(180deg, #050505 0%, transparent 28%, transparent 74%, rgba(5, 5, 5, 0.42) 100%);
+  content: "";
+  pointer-events: none;
 }
 
 .final-inner {
@@ -2936,6 +2949,27 @@ body.is-scrolled .top-nav {
 
 .final-copy {
   max-width: 840px;
+}
+
+.final-section {
+  --final-spotlight: rgba(255, 243, 240, 0.18);
+  --final-spotlight-cool: rgba(127, 166, 166, 0.1);
+  --final-edge-shade: rgba(0, 0, 0, 0.58);
+  background:
+    radial-gradient(ellipse 42% 30% at 50% 48%, var(--final-spotlight), transparent 64%),
+    radial-gradient(ellipse 64% 42% at 50% 54%, var(--final-spotlight-cool), transparent 72%),
+    linear-gradient(180deg, #050505 0%, #080b0b 22%, #101717 68%, #141a1b 100%);
+}
+
+.final-section::after {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background:
+    radial-gradient(ellipse 82% 52% at 50% 52%, transparent 42%, var(--final-edge-shade) 100%),
+    linear-gradient(180deg, #050505 0%, transparent 28%, transparent 74%, rgba(5, 5, 5, 0.42) 100%);
+  content: "";
+  pointer-events: none;
 }
 
 @media (max-width: 980px) {
