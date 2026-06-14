@@ -1,4 +1,4 @@
-# self-introduction
+# Homepage
 
 React personal introduction website.
 
