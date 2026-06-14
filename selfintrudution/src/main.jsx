@@ -26,12 +26,12 @@ const projects = [
   },
   {
     label: 'Agent',
-    title: 'SDD Agent Engine',
-    caption: '基于 SDD 的本地 Agent 工作流引擎，面向 VS Code、RAG、多 Agent 编排、自动门禁和文档回写闭环。',
-    href: 'https://github.com/LeoninCS/SDD-Agent-WorkflowEngine',
-    stack: ['Agent', 'RAG', 'VS Code', 'Workflow', 'Docs'],
+    title: 'SDD Agent Harness',
+    caption: '基于 SDD 的 Agent Harness，面向 VS Code、RAG、多 Agent 编排、自动门禁和文档回写闭环。',
+    href: 'https://github.com/LeoninCS/SDD-Agent-Harness',
+    stack: ['Harness', 'RAG', 'VS Code', 'Workflow', 'Docs'],
     highlights: ['多 Agent 编排', '自动门禁', '文档回写闭环'],
-    preview: ['Spec', 'Planner', 'RAG', 'Gate', 'Docs'],
+    preview: ['Spec', 'Harness', 'RAG', 'Gate', 'Docs'],
   },
   {
     label: 'Cloud',
@@ -822,7 +822,7 @@ function Projects() {
             </h2>
           </div>
           <p>
-            这里集中展示 CompliK、GCFeed、SDD Agent Engine 和 GoClub，
+            这里集中展示 CompliK、GCFeed、SDD Agent Harness 和 GoClub，
             对应集群合规、内容流后端、智能体工作流和开源知识库。
           </p>
         </div>
