@@ -1672,7 +1672,6 @@ body.is-scrolled .top-nav {
 .split-heading,
 .feature-stage,
 .feature-caption,
-.get-card,
 .profile-grid div,
 .social-strip a,
 .final-copy {
@@ -1696,6 +1695,12 @@ body.is-scrolled .top-nav {
 .get-card.is-visible {
   opacity: var(--stack-opacity);
   transform: translateY(0) scale(var(--card-scale));
+}
+
+.get-stack .get-card.is-edge-slice {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none;
 }
 
 .social-strip a {

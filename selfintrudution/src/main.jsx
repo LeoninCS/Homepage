@@ -310,7 +310,6 @@ function useScrollEffects() {
       '.split-heading',
       '.feature-stage',
       '.feature-caption',
-      '.get-card',
       '.profile-grid div',
       '.social-strip a',
       '.final-copy',
@@ -389,8 +388,10 @@ function useScrollEffects() {
     setRootVar('--hero-ui-opacity', '1');
     setRootVar('--forest-scale', '1');
 
-    const stackCards = [...document.querySelectorAll('.get-card')];
-    const stackSection = document.querySelector('.what-section');
+    const stackGroups = [...document.querySelectorAll('.get-stack')].map((stack) => ({
+      stack,
+      cards: [...stack.querySelectorAll('.get-card')],
+    }));
 
     const update = (nextScroll) => {
       scrollTuning = getScrollTuning(mobileQuery.matches);
@@ -444,27 +445,32 @@ function useScrollEffects() {
       setRootVar('--final-glow-y', `${Math.round(scrollY * -0.018)}px`);
       ensureMotion();
 
-      if (!stackSection) {
+      if (!stackGroups.length) {
         return;
       }
 
-      const stackTop = stackSection.offsetTop - viewportHeight * 1.1;
-      const stackBottom = stackSection.offsetTop + stackSection.offsetHeight + viewportHeight;
-      if (scrollY < stackTop || scrollY > stackBottom) {
-        return;
-      }
+      stackGroups.forEach(({ stack, cards }) => {
+        const stackTop = stack.offsetTop - viewportHeight * 1.1;
+        const stackBottom = stack.offsetTop + stack.offsetHeight + viewportHeight;
+        if (scrollY < stackTop || scrollY > stackBottom) {
+          cards.forEach((card) => card.classList.remove('is-edge-slice'));
+          return;
+        }
 
-      stackCards.forEach((card, index) => {
-        const rect = card.getBoundingClientRect();
-        const nextRect = stackCards[index + 1]?.getBoundingClientRect();
-        const coverProgress = nextRect ? clamp((rect.bottom - nextRect.top) / rect.height, 0, 1) : 0;
-        const centerOffset = (rect.top + rect.height / 2 - viewportHeight / 2) / viewportHeight;
-        const scale = 1 - Math.min(coverProgress * 0.058 + Math.abs(centerOffset) * 0.006, 0.07);
-        const imageScale = 1.045 - Math.min(coverProgress * 0.035 + Math.abs(centerOffset) * 0.016, 0.055);
-        const layerOpacity = 1 - Math.min(coverProgress * 0.18, 0.18);
-        card.style.setProperty('--card-scale', scale.toFixed(3));
-        card.style.setProperty('--card-image-scale', imageScale.toFixed(3));
-        card.style.setProperty('--stack-opacity', layerOpacity.toFixed(3));
+        cards.forEach((card, index) => {
+          const rect = card.getBoundingClientRect();
+          const nextRect = cards[index + 1]?.getBoundingClientRect();
+          const coverProgress = nextRect ? clamp((rect.bottom - nextRect.top) / rect.height, 0, 1) : 0;
+          const centerOffset = (rect.top + rect.height / 2 - viewportHeight / 2) / viewportHeight;
+          const scale = 1 - Math.min(coverProgress * 0.058 + Math.abs(centerOffset) * 0.006, 0.07);
+          const imageScale = 1.045 - Math.min(coverProgress * 0.035 + Math.abs(centerOffset) * 0.016, 0.055);
+          const layerOpacity = 1 - Math.min(coverProgress * 0.18, 0.18);
+          const isEdgeSlice = rect.bottom < 24 || rect.top > viewportHeight - 24;
+          card.style.setProperty('--card-scale', scale.toFixed(3));
+          card.style.setProperty('--card-image-scale', imageScale.toFixed(3));
+          card.style.setProperty('--stack-opacity', layerOpacity.toFixed(3));
+          card.classList.toggle('is-edge-slice', isEdgeSlice);
+        });
       });
     };
 
