@@ -165,6 +165,15 @@ const socials = [
   },
 ];
 
+const resumeAnchors = [
+  { label: '信息', href: '#info' },
+  { label: '实习', href: '#internship' },
+  { label: '项目', href: '#projects' },
+  { label: '竞赛', href: '#competition' },
+  { label: '爱好', href: '#hobbies' },
+  { label: '社媒', href: '#socials' },
+];
+
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
@@ -486,12 +495,9 @@ function Nav() {
     <nav className="top-nav" aria-label="主导航">
       <Logo />
       <div className="nav-center">
-        <a href="#info">信息</a>
-        <a href="#internship">实习</a>
-        <a href="#projects">项目</a>
-        <a href="#competition">竞赛</a>
-        <a href="#hobbies">爱好</a>
-        <a href="#socials">社媒</a>
+        {resumeAnchors.map((item) => (
+          <a href={item.href} key={item.href}>{item.label}</a>
+        ))}
       </div>
       <div className="nav-actions">
         <a href="https://github.com/LeoninCS" rel="noreferrer" target="_blank">GitHub</a>
@@ -511,17 +517,13 @@ function MockColorField() {
     }
 
     const context = canvas.getContext('2d', { alpha: true });
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let animationFrame = 0;
     let width = 0;
     let height = 0;
-    let lastPaint = 0;
     const colorStops = [
-      ['rgba(164, 255, 236, 0.58)', 'rgba(164, 255, 236, 0)'],
-      ['rgba(255, 214, 148, 0.42)', 'rgba(255, 214, 148, 0)'],
-      ['rgba(255, 169, 217, 0.38)', 'rgba(255, 169, 217, 0)'],
-      ['rgba(122, 164, 255, 0.32)', 'rgba(122, 164, 255, 0)'],
-      ['rgba(220, 255, 177, 0.3)', 'rgba(220, 255, 177, 0)'],
+      { x: 0.66, y: 0.24, radius: 0.52, inner: 'rgba(207, 255, 247, 0.7)', outer: 'rgba(207, 255, 247, 0)' },
+      { x: 0.78, y: 0.56, radius: 0.48, inner: 'rgba(83, 221, 226, 0.52)', outer: 'rgba(83, 221, 226, 0)' },
+      { x: 0.43, y: 0.28, radius: 0.44, inner: 'rgba(255, 247, 232, 0.42)', outer: 'rgba(255, 247, 232, 0)' },
+      { x: 0.38, y: 0.72, radius: 0.5, inner: 'rgba(31, 89, 80, 0.38)', outer: 'rgba(31, 89, 80, 0)' },
     ];
 
     const resize = () => {
@@ -530,56 +532,41 @@ function MockColorField() {
       height = Math.max(220, Math.round(rect.height / 2));
       canvas.width = width;
       canvas.height = height;
+      paint();
     };
 
-    const paint = (time = 0) => {
+    const paint = () => {
       context.clearRect(0, 0, width, height);
-      context.fillStyle = '#202020';
+      context.fillStyle = '#e7fbf7';
       context.fillRect(0, 0, width, height);
-      context.globalCompositeOperation = 'lighter';
+      context.globalCompositeOperation = 'source-over';
 
-      colorStops.forEach(([inner, outer], index) => {
-        const phase = time * (0.00012 + index * 0.000018) + index * 1.78;
-        const x = width * (0.54 + Math.sin(phase) * (0.22 + index * 0.018));
-        const y = height * (0.42 + Math.cos(phase * 0.91) * (0.28 - index * 0.018));
-        const radius = Math.max(width, height) * (0.36 + index * 0.045);
+      colorStops.forEach((stop) => {
+        const x = width * stop.x;
+        const y = height * stop.y;
+        const radius = Math.max(width, height) * stop.radius;
         const gradient = context.createRadialGradient(x, y, 0, x, y, radius);
-        gradient.addColorStop(0, inner);
-        gradient.addColorStop(1, outer);
+        gradient.addColorStop(0, stop.inner);
+        gradient.addColorStop(1, stop.outer);
         context.fillStyle = gradient;
         context.fillRect(0, 0, width, height);
       });
 
       context.globalCompositeOperation = 'source-over';
       const shadow = context.createLinearGradient(0, 0, 0, height);
-      shadow.addColorStop(0, 'rgba(255, 255, 255, 0.12)');
+      shadow.addColorStop(0, 'rgba(255, 255, 255, 0.18)');
       shadow.addColorStop(0.34, 'rgba(0, 0, 0, 0)');
-      shadow.addColorStop(1, 'rgba(0, 0, 0, 0.68)');
+      shadow.addColorStop(1, 'rgba(0, 0, 0, 0.38)');
       context.fillStyle = shadow;
       context.fillRect(0, 0, width, height);
     };
 
-    const tick = (time) => {
-      if (time - lastPaint > 33) {
-        paint(time);
-        lastPaint = time;
-      }
-
-      animationFrame = requestAnimationFrame(tick);
-    };
-
     resize();
-    paint();
 
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(canvas);
 
-    if (!mediaQuery.matches) {
-      animationFrame = requestAnimationFrame(tick);
-    }
-
     return () => {
-      cancelAnimationFrame(animationFrame);
       resizeObserver.disconnect();
     };
   }, []);
@@ -594,11 +581,16 @@ function ResumeMockup({ compact = false }) {
       <aside className="mock-sidebar">
         <div className="mock-pill" />
         <div className="mock-search" />
-        {['信息', '实习', '项目', '竞赛', '爱好', '社媒'].map((item) => (
-          <div className="mock-nav-row" key={item}>
+        {resumeAnchors.map((item) => (
+          <a
+            aria-label={`跳转到${item.label}`}
+            className="mock-nav-row"
+            href={item.href}
+            key={item.href}
+          >
             <span />
-            <b>{item}</b>
-          </div>
+            <b>{item.label}</b>
+          </a>
         ))}
         <div className="mock-course-title">信息</div>
         <div className="mock-line long" />
@@ -659,7 +651,7 @@ function About() {
   const lines = [
     '我是献超前，技术 ID 为 LeoninCS，河南大学软件工程专业本科在读，预计于 2027 年毕业。目前在杭州一家开源初创公司实习，持续参与实际工程项目与开源相关工作。',
     'AI重度患者，日均上亿token用量；DevOps理念践行者，具备Go后端、AI Agent开发能力、Docker、Kubernetes等云原生技术部署运维能力，并具备实际项目落地经验；',
-    '开源贡献者，维护Sealos合规组件，个人项目github累计350+star；技术内容创作者，全网累计1500+粉丝，1.5w+点赞收藏数；Web3信徒，认同去中心化的理念。',
+    '开源贡献者，维护Sealos合规组件，个人项目github累计400+star；技术内容创作者，全网累计1500+粉丝，1.5w+点赞收藏数；Web3信徒，认同去中心化的理念。',
     '生活中，我喜欢 骑行、摄影与 Hi-Fi，也常听 Hip Hop 和 R&B。除此之外，我对投资理财也有一定兴趣，主要关注美股与加密货币，保持对技术与生活的长期探索。',
   ];
 
@@ -950,15 +942,7 @@ function Socials() {
             </a>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
 
-function FinalCTA() {
-  return (
-    <section className="final-section">
-      <div className="section-inner final-inner">
         <div className="final-copy">
           <h2>沟通与协作，从这里开始。</h2>
           <p>
@@ -984,7 +968,6 @@ function App() {
       <Competition />
       <Hobbies />
       <Socials />
-      <FinalCTA />
     </main>
   );
 }
