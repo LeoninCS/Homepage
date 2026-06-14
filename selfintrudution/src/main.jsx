@@ -19,29 +19,37 @@ const projects = [
     label: 'Feed',
     title: 'GCFeed',
     caption: 'GoClubFeed 面向短视频场景，围绕内容生产、分发、消费与治理链路展开，技术栈包含 Go、Gin、GORM、Redis、MQ 和 MySQL。',
-    image: '/picture/46-icpc-wuhan-regional-01.jpg',
     href: 'https://github.com/LeoninCS/GCFeed',
+    stack: ['Go', 'Gin', 'GORM', 'Redis', 'MQ', 'MySQL'],
+    highlights: ['短视频内容流', '生产分发消费链路', '治理与缓存设计'],
+    preview: ['Producer', 'Feed API', 'Redis Cache', 'MQ', 'MySQL'],
   },
   {
     label: 'Agent',
     title: 'SDD Agent Engine',
     caption: '基于 SDD 的本地 Agent 工作流引擎，面向 VS Code、RAG、多 Agent 编排、自动门禁和文档回写闭环。',
-    image: '/picture/35-programming-contest-team-photo.jpg',
     href: 'https://github.com/LeoninCS/SDD-Agent-WorkflowEngine',
+    stack: ['Agent', 'RAG', 'VS Code', 'Workflow', 'Docs'],
+    highlights: ['多 Agent 编排', '自动门禁', '文档回写闭环'],
+    preview: ['Spec', 'Planner', 'RAG', 'Gate', 'Docs'],
   },
   {
     label: 'Cloud',
     title: 'CompliK',
     caption: 'Sealos 系统组实习项目，参与集群合规系统 Admin 开发、系统适配、CI、多端分析插件和 ProcScan 二进制分析。',
-    image: '/picture/40-illuminated-arch-bridge-night.jpg',
     href: 'https://github.com/labring/CompliK',
+    stack: ['Sealos', 'Kubernetes', 'CI', 'Admin', 'ProcScan'],
+    highlights: ['集群合规系统', '多端分析插件', '二进制分析'],
+    preview: ['Cluster', 'Admin', 'Policy', 'ProcScan', 'Report'],
   },
   {
     label: 'Open Source',
     title: 'GoClub',
     caption: 'Hugo + GitHub Pages + Cloudflare 搭建的 Go 后端知识库，整理面经、八股、资源索引、项目学习和技术博客。',
-    image: '/picture/42-icpc-shenzhen-invitational-01.jpg',
     href: 'https://goclub.space/',
+    stack: ['Hugo', 'GitHub Pages', 'Cloudflare', 'Go'],
+    highlights: ['Go 后端知识库', '资源索引', '技术博客'],
+    preview: ['Interview', 'Backend', 'Projects', 'Resources', 'Blog'],
   },
 ];
 
@@ -519,40 +527,75 @@ function MockColorField() {
     const context = canvas.getContext('2d', { alpha: true });
     let width = 0;
     let height = 0;
+    let animationFrame = 0;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const colorStops = [
-      { x: 0.66, y: 0.24, radius: 0.52, inner: 'rgba(207, 255, 247, 0.7)', outer: 'rgba(207, 255, 247, 0)' },
-      { x: 0.78, y: 0.56, radius: 0.48, inner: 'rgba(83, 221, 226, 0.52)', outer: 'rgba(83, 221, 226, 0)' },
-      { x: 0.43, y: 0.28, radius: 0.44, inner: 'rgba(255, 247, 232, 0.42)', outer: 'rgba(255, 247, 232, 0)' },
-      { x: 0.38, y: 0.72, radius: 0.5, inner: 'rgba(31, 89, 80, 0.38)', outer: 'rgba(31, 89, 80, 0)' },
+      { x: 0.64, y: 0.22, xAmp: 0.18, yAmp: 0.12, radius: 0.5, hue: 176, sat: 96, light: 68, alpha: 0.72, speed: 0.00088, phase: 0 },
+      { x: 0.78, y: 0.58, xAmp: 0.16, yAmp: 0.16, radius: 0.48, hue: 204, sat: 92, light: 46, alpha: 0.62, speed: 0.00072, phase: 1.8 },
+      { x: 0.45, y: 0.3, xAmp: 0.2, yAmp: 0.12, radius: 0.44, hue: 42, sat: 90, light: 82, alpha: 0.42, speed: 0.00076, phase: 3.2 },
+      { x: 0.36, y: 0.72, xAmp: 0.14, yAmp: 0.16, radius: 0.5, hue: 158, sat: 72, light: 28, alpha: 0.48, speed: 0.00064, phase: 4.6 },
+      { x: 0.58, y: 0.5, xAmp: 0.22, yAmp: 0.18, radius: 0.58, hue: 314, sat: 88, light: 62, alpha: 0.32, speed: 0.00058, phase: 6.1 },
+      { x: 0.7, y: 0.34, xAmp: 0.18, yAmp: 0.14, radius: 0.38, hue: 265, sat: 78, light: 66, alpha: 0.24, speed: 0.00068, phase: 8.4 },
     ];
 
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      width = Math.max(280, Math.round(rect.width / 2));
-      height = Math.max(220, Math.round(rect.height / 2));
-      canvas.width = width;
-      canvas.height = height;
-      paint();
+    const hsla = (stop, phase, alphaFactor = 1) => {
+      const hue = (stop.hue + Math.sin(phase * 0.7) * 36 + Math.cos(phase * 0.38) * 24 + 360) % 360;
+      const light = Math.max(26, Math.min(88, stop.light + Math.sin(phase * 0.52) * 7));
+      return `hsla(${hue}, ${stop.sat}%, ${light}%, ${stop.alpha * alphaFactor})`;
     };
 
-    const paint = () => {
+    const paint = (time = 0) => {
+      if (!width || !height) {
+        return;
+      }
+
       context.clearRect(0, 0, width, height);
-      context.fillStyle = '#e7fbf7';
+      const colorPhase = time * 0.00024;
+      const base = context.createLinearGradient(0, 0, width, height);
+      base.addColorStop(0, `hsl(${174 + Math.sin(colorPhase) * 22}, 92%, 91%)`);
+      base.addColorStop(0.44, `hsl(${188 + Math.cos(colorPhase * 1.18) * 36}, 88%, 80%)`);
+      base.addColorStop(1, `hsl(${205 + Math.sin(colorPhase * 0.92) * 48}, 82%, 58%)`);
+      context.fillStyle = base;
       context.fillRect(0, 0, width, height);
       context.globalCompositeOperation = 'source-over';
+      context.filter = 'blur(22px)';
 
       colorStops.forEach((stop) => {
-        const x = width * stop.x;
-        const y = height * stop.y;
-        const radius = Math.max(width, height) * stop.radius;
+        const phase = time * stop.speed + stop.phase;
+        const x = width * (stop.x + Math.sin(phase) * stop.xAmp + Math.sin(phase * 0.34 + stop.phase) * 0.05);
+        const y = height * (stop.y + Math.cos(phase * 0.82) * stop.yAmp + Math.cos(phase * 0.41) * 0.04);
+        const radius = Math.max(width, height) * (stop.radius + Math.sin(phase * 0.54) * 0.08);
         const gradient = context.createRadialGradient(x, y, 0, x, y, radius);
-        gradient.addColorStop(0, stop.inner);
-        gradient.addColorStop(1, stop.outer);
+        gradient.addColorStop(0, hsla(stop, phase, 1));
+        gradient.addColorStop(0.42, hsla(stop, phase + 0.8, 0.62));
+        gradient.addColorStop(1, hsla(stop, phase + 1.2, 0));
         context.fillStyle = gradient;
         context.fillRect(0, 0, width, height);
       });
 
+      context.globalCompositeOperation = 'multiply';
+      context.filter = 'blur(26px)';
+      const darkPhase = time * 0.00052;
+      const darkX = width * (0.24 + Math.sin(darkPhase) * 0.14);
+      const darkY = height * (0.5 + Math.cos(darkPhase * 0.82) * 0.12);
+      const dark = context.createRadialGradient(darkX, darkY, 0, darkX, darkY, Math.max(width, height) * 0.64);
+      dark.addColorStop(0, 'rgba(20, 45, 43, 0.42)');
+      dark.addColorStop(0.54, 'rgba(20, 45, 43, 0.18)');
+      dark.addColorStop(1, 'rgba(20, 45, 43, 0)');
+      context.fillStyle = dark;
+      context.fillRect(0, 0, width, height);
+
       context.globalCompositeOperation = 'source-over';
+      context.filter = 'none';
+      const sheenPhase = time * 0.00064;
+      const sheen = context.createLinearGradient(0, height * (0.2 + Math.sin(sheenPhase) * 0.06), width, height * (0.8 + Math.cos(sheenPhase) * 0.06));
+      sheen.addColorStop(0, 'rgba(255, 255, 255, 0.36)');
+      sheen.addColorStop(0.42, 'rgba(255, 255, 255, 0.08)');
+      sheen.addColorStop(0.76, 'rgba(51, 211, 214, 0.18)');
+      sheen.addColorStop(1, 'rgba(0, 0, 0, 0.08)');
+      context.fillStyle = sheen;
+      context.fillRect(0, 0, width, height);
+
       const shadow = context.createLinearGradient(0, 0, 0, height);
       shadow.addColorStop(0, 'rgba(255, 255, 255, 0.18)');
       shadow.addColorStop(0.34, 'rgba(0, 0, 0, 0)');
@@ -561,13 +604,40 @@ function MockColorField() {
       context.fillRect(0, 0, width, height);
     };
 
+    const animate = (time) => {
+      paint(time);
+      animationFrame = window.requestAnimationFrame(animate);
+    };
+
+    const startAnimation = () => {
+      window.cancelAnimationFrame(animationFrame);
+      if (reduceMotion.matches) {
+        paint(window.performance.now());
+        return;
+      }
+      animationFrame = window.requestAnimationFrame(animate);
+    };
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      width = Math.max(280, Math.round(rect.width / 2));
+      height = Math.max(220, Math.round(rect.height / 2));
+      canvas.width = width;
+      canvas.height = height;
+      paint(window.performance.now());
+    };
+
     resize();
+    startAnimation();
 
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(canvas);
+    reduceMotion.addEventListener('change', startAnimation);
 
     return () => {
+      window.cancelAnimationFrame(animationFrame);
       resizeObserver.disconnect();
+      reduceMotion.removeEventListener('change', startAnimation);
     };
   }, []);
 
@@ -779,26 +849,40 @@ function Projects() {
         >
           <div className="feature-app">
             <aside>
-              <strong>LeoninCS</strong>
-              {['Gin', 'GORM', '缓存', '云原生', '智能体'].map((item) => (
-                <span key={item}>{item}</span>
-              ))}
+              <span className="feature-kicker">{active.label}</span>
+              <h3>{active.title}</h3>
+              <p>{active.caption}</p>
+              <div className="feature-stack" aria-label={`${active.title} 技术栈`}>
+                {active.stack.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+              <a href={active.href} rel="noreferrer" target="_blank">打开仓库</a>
             </aside>
             <main>
-              <div className="feature-toolbar">
-                <b>{active.title}</b>
-                <a href={active.href} rel="noreferrer" target="_blank">打开仓库</a>
-              </div>
-              <div className="feature-cards">
-                <article style={{ backgroundImage: `url(${active.image})` }}>
+              <div className="feature-preview">
+                <div className="feature-preview-head">
                   <span>{active.label}</span>
-                </article>
-                <article style={{ backgroundImage: 'url(/picture/38-bike-coastal-road.jpg)' }}>
-                  <span>生活记录</span>
-                </article>
-                <article style={{ backgroundImage: 'url(/picture/01-city-tower-blue-hour.jpg)' }}>
-                  <span>摄影</span>
-                </article>
+                  <em>{active.stack[0]}</em>
+                </div>
+                <div className="feature-preview-flow" aria-label={`${active.title} 项目链路`}>
+                  {active.preview.map((item, index) => (
+                    <React.Fragment key={item}>
+                      <span>{item}</span>
+                      {index < active.preview.length - 1 && <i aria-hidden="true" />}
+                    </React.Fragment>
+                  ))}
+                </div>
+                <div className="feature-preview-grid" aria-hidden="true">
+                  {active.highlights.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="feature-highlights">
+                {active.highlights.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
               </div>
             </main>
           </div>
