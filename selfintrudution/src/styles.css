@@ -3862,6 +3862,12 @@ body.is-scrolled .top-nav {
   text-align: center;
 }
 
+@media (min-width: 900px) and (max-height: 860px) and (min-aspect-ratio: 2 / 1) {
+  .hero-device {
+    display: none;
+  }
+}
+
 @media (max-width: 560px) {
   .hero {
     min-height: 992px;
