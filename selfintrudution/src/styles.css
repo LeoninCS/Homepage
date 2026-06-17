@@ -3864,7 +3864,8 @@ body.is-scrolled .top-nav {
 
 @media (min-width: 900px) and (max-height: 860px) and (min-aspect-ratio: 2 / 1) {
   .hero-device {
-    display: none;
+    bottom: clamp(72px, 10vh, 112px);
+    z-index: 8;
   }
 }
 
