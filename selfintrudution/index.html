@@ -5,6 +5,10 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/jpeg" href="picture/lc.jpg" />
   <link rel="apple-touch-icon" href="picture/lc.jpg" />
+  <link rel="preload" as="image" href="/images/fora-hero-far.png" fetchpriority="high" />
+  <link rel="preload" as="image" href="/images/fora-hero-mid.png" fetchpriority="high" />
+  <link rel="preload" as="image" href="/images/fora-hero-foreground.png" fetchpriority="high" />
+  <link rel="preload" as="image" href="/picture/lc.jpg" fetchpriority="high" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#20292c" />
 
@@ -140,10 +144,97 @@
       overflow: hidden !important;
       white-space: nowrap !important;
     }
+
+    #boot-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: grid;
+      place-items: center;
+      color: #fff3f0;
+      background:
+        radial-gradient(ellipse at 50% 22%, rgba(161, 129, 133, 0.64), transparent 48%),
+        linear-gradient(180deg, #1b2228 0%, #10120f 58%, #020302 100%);
+    }
+
+    #boot-loader::before {
+      position: absolute;
+      inset: auto 0 0;
+      height: min(46vw, 420px);
+      background: url("/images/fora-hero-foreground.png") center bottom / 100% 100% no-repeat;
+      opacity: 0.36;
+      filter: sepia(0.12) saturate(1.2) contrast(1.18) brightness(0.48);
+      content: "";
+    }
+
+    #boot-loader .startup-loader-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      justify-items: center;
+      gap: 18px;
+      width: min(340px, calc(100% - 64px));
+    }
+
+    #boot-loader span {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: clamp(32px, 7vw, 56px);
+      font-weight: 400;
+      line-height: 1;
+      text-align: center;
+    }
+
+    #boot-loader strong {
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 13px;
+      font-weight: 520;
+    }
+
+    #boot-loader .startup-progress {
+      width: 100%;
+      height: 3px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    #boot-loader .startup-progress i {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #f2d7bd, #b8e8dd);
+      transform-origin: left center;
+      animation: boot-loader-progress 1.6s ease-in-out infinite;
+    }
+
+    @keyframes boot-loader-progress {
+      0% {
+        transform: scaleX(0.18);
+      }
+
+      55% {
+        transform: scaleX(0.72);
+      }
+
+      100% {
+        transform: scaleX(0.94);
+      }
+    }
   </style>
 </head>
 
 <body>
+  <div id="boot-loader" role="status" aria-live="polite" aria-label="页面资源加载中">
+    <div class="startup-loader-inner">
+      <span>LeoninCS Profile</span>
+      <div class="startup-progress" aria-hidden="true">
+        <i></i>
+      </div>
+      <strong>Loading</strong>
+    </div>
+  </div>
+
   <div id="seo-content" class="sr-only-seo" aria-hidden="true">
     <header>
       <h1>LeoninCS's Profile Page</h1>

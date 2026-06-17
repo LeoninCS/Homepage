@@ -144,6 +144,7 @@ const hobbyCards = [
 ];
 
 const contactEmail = 'xianchaoqian@foxmail.com';
+const blogUrl = 'https://blockblog.top/';
 
 const socials = [
   {
@@ -182,8 +183,135 @@ const resumeAnchors = [
   { label: '社媒', href: '#socials' },
 ];
 
+const entryAssetUrls = Array.from(new Set([
+  avatarImage,
+  ...mockMemberIcons.map((icon) => icon.src),
+  '/images/fora-hero-far.png',
+  '/images/fora-hero-mid.png',
+  '/images/fora-hero-foreground.png',
+]));
+
+const deferredAssetUrls = Array.from(new Set([
+  '/picture/35-programming-contest-team-photo.jpg',
+  '/picture/38-bike-coastal-road.jpg',
+  '/picture/01-city-tower-blue-hour.jpg',
+  ...internshipCards.map((card) => card.image),
+  ...competitionCards.map((card) => card.image),
+  ...hobbyCards.map((card) => card.image),
+]));
+
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
+}
+
+function delay(duration) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, duration);
+  });
+}
+
+function loadImageAsset(src) {
+  return new Promise((resolve) => {
+    const image = new Image();
+    const done = () => {
+      if (image.decode) {
+        image.decode().then(resolve, resolve);
+        return;
+      }
+
+      resolve();
+    };
+
+    image.decoding = 'async';
+    image.onload = done;
+    image.onerror = resolve;
+    image.src = src;
+
+    if (image.complete) {
+      done();
+    }
+  });
+}
+
+async function preloadPageResources(onProgress) {
+  const assets = entryAssetUrls;
+  let completed = 0;
+  const updateProgress = () => {
+    completed += 1;
+    onProgress(Math.min(0.94, completed / Math.max(assets.length, 1)));
+  };
+  const imageLoads = assets.map((src) => loadImageAsset(src).finally(updateProgress));
+  const fontReady = document.fonts?.ready?.catch(() => undefined) ?? Promise.resolve();
+
+  await Promise.all([
+    ...imageLoads,
+    fontReady,
+  ]);
+  onProgress(1);
+}
+
+function preloadDeferredResources() {
+  const start = () => {
+    deferredAssetUrls.forEach((src) => {
+      loadImageAsset(src);
+    });
+  };
+
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(start, { timeout: 1800 });
+    return;
+  }
+
+  window.setTimeout(start, 400);
+}
+
+function useResourceGate() {
+  const [state, setState] = useState({ progress: 0, ready: false });
+
+  useEffect(() => {
+    let cancelled = false;
+    const startedAt = performance.now();
+    document.getElementById('boot-loader')?.remove();
+
+    const complete = async () => {
+      await preloadPageResources((progress) => {
+        if (!cancelled) {
+          setState((current) => ({
+            ...current,
+            progress: Math.max(current.progress, progress),
+          }));
+        }
+      });
+
+      const remainingDuration = 520 - (performance.now() - startedAt);
+      if (remainingDuration > 0) {
+        await delay(remainingDuration);
+      }
+
+      if (!cancelled) {
+        setState({ progress: 1, ready: true });
+        preloadDeferredResources();
+      }
+    };
+
+    complete();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('is-resource-loading', !state.ready);
+    document.body.classList.toggle('is-resource-loading', !state.ready);
+
+    return () => {
+      document.documentElement.classList.remove('is-resource-loading');
+      document.body.classList.remove('is-resource-loading');
+    };
+  }, [state.ready]);
+
+  return state;
 }
 
 function useScrollEffects() {
@@ -663,6 +791,8 @@ function ResumeMockup({ compact = false }) {
             className="mock-nav-row"
             href={item.href}
             key={item.href}
+            rel={item.external ? 'noreferrer' : undefined}
+            target={item.external ? '_blank' : undefined}
           >
             <span />
             <b>{item.label}</b>
@@ -710,7 +840,10 @@ function Hero() {
           <span>欢迎来到布洛克琴的主页，这里记录了我的个人信息与项目经历，</span>
           <span>希望能帮助您更好地了解我。</span>
         </p>
-        <a className="cta" href="mailto:xianchaoqian@foxmail.com">联系我</a>
+        <div className="hero-actions">
+          <a className="cta" href={blogUrl} rel="noreferrer" target="_blank">访问博客</a>
+          <a className="cta secondary" href="mailto:xianchaoqian@foxmail.com">联系我</a>
+        </div>
       </div>
       <div className="hero-device reveal">
         <ResumeMockup />
@@ -1045,20 +1178,38 @@ function Socials() {
   );
 }
 
+function StartupLoader({ progress, ready }) {
+  return (
+    <div className={ready ? 'startup-loader is-done' : 'startup-loader'} role="status" aria-live="polite" aria-label="页面资源加载中">
+      <div className="startup-loader-inner">
+        <span>LeoninCS Profile</span>
+        <div className="startup-progress" aria-hidden="true">
+          <i style={{ transform: `scaleX(${progress})` }} />
+        </div>
+        <strong>{Math.round(progress * 100)}%</strong>
+      </div>
+    </div>
+  );
+}
+
 function App() {
+  const { progress, ready } = useResourceGate();
   useScrollEffects();
 
   return (
-    <main>
-      <Nav />
-      <Hero />
-      <About />
-      <Internship />
-      <Projects />
-      <Competition />
-      <Hobbies />
-      <Socials />
-    </main>
+    <>
+      <StartupLoader progress={progress} ready={ready} />
+      <main className={ready ? 'site-shell is-ready' : 'site-shell'}>
+        <Nav />
+        <Hero />
+        <About />
+        <Internship />
+        <Projects />
+        <Competition />
+        <Hobbies />
+        <Socials />
+      </main>
+    </>
   );
 }
 
