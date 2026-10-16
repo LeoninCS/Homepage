@@ -2432,7 +2432,7 @@ body.is-scrolled .top-nav {
   }
 }
 
-/* MiniMax Cloud Infra experience card: a quiet monochrome console with a small
+/* MiniMax platform engineering experience card: a quiet console with a small
  * amount of signal color, matching the brand's black / white / spectrum feel. */
 #internship .experience-meta {
   display: grid;
@@ -2553,28 +2553,21 @@ body.is-scrolled .top-nav {
   backdrop-filter: blur(18px);
 }
 
-.minimax-empty-console {
-  display: grid;
-  place-items: center;
+.minimax-platform-console .minimax-console-head {
+  flex-wrap: wrap;
 }
 
-.minimax-brand-lockup {
-  display: grid;
-  gap: 22px;
-  justify-items: center;
-}
-
-.minimax-brand-lockup .minimax-logo {
-  width: min(220px, 72%);
-  height: 54px;
-  padding: 10px 16px;
-}
-
-.minimax-brand-lockup > strong {
+.minimax-platform-console .minimax-console-head > strong {
   color: rgba(255, 255, 255, 0.84);
-  font-size: clamp(24px, 3vw, 38px);
-  font-weight: 480;
-  letter-spacing: 0.08em;
+  font-size: 12px;
+  font-weight: 540;
+  letter-spacing: 0.02em;
+  white-space: normal;
+}
+
+.minimax-platform-console .minimax-milestones p {
+  font-size: 13px;
+  line-height: 1.55;
 }
 
 .minimax-console-head {
@@ -4355,7 +4348,7 @@ body.is-scrolled .top-nav {
 
 }
 
-/* Keep the denser MiniMax card taller than the legacy internship card rule. */
+/* Let the MiniMax card grow with its work descriptions. */
 .visual-toolbar span.visual-tag {
   width: auto;
   min-width: max-content;
@@ -4363,7 +4356,7 @@ body.is-scrolled .top-nav {
 }
 
 #internship .get-card.minimax-card {
-  height: 560px;
+  height: auto;
   min-height: 560px;
 }
 

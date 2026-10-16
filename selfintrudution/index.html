@@ -17,7 +17,7 @@
     content="欢迎来到布洛克琴的主页，这里记录了我的个人信息与项目经历，希望能帮助您更好地了解我。" />
   <meta name="author" content="LeoninCS, Xianchao Qian, 献超前" />
   <meta name="keywords"
-    content="LeoninCS, 献超前, Xianchao Qian, MiniMax, Cloud Infra, 云基础设施, Go, Gin, GORM, Kubernetes, Sealos, CompliK, GCFeed, SDD, Redis, MQ, Raft, Codeforces, LeetCode, CCPC, GPLT, 蓝桥杯, 百度之星, ICPC, 个人简历" />
+    content="LeoninCS, 献超前, Xianchao Qian, MiniMax, Cloud Infra, 云基础设施, Go, Gin, GORM, Kubernetes, Sealos, CompliK, GCFeed, MiniCode-go, AI Agent, Redis, MQ, Raft, Codeforces, LeetCode, CCPC, GPLT, 蓝桥杯, 百度之星, ICPC, 个人简历" />
   <meta name="robots" content="index, follow" />
 
   <meta property="og:type" content="website" />
@@ -76,7 +76,7 @@
           "Python",
           "后端工程",
           "Kubernetes",
-          "MiniMax Cloud Infra",
+          "MiniMax基础架构-效率组",
           "Sealos",
           "CompliK",
           "GCFeed",
@@ -85,8 +85,8 @@
           "Raft",
           "分布式系统",
           "Cloud Infrastructure",
-          "SDD",
-          "LangGraph",
+          "MiniCode-go",
+          "AI Agent",
           "算法训练",
           "摄影"
         ],
@@ -241,10 +241,10 @@
     <main>
       <article id="seo-info">
         <h2>信息</h2>
-        <p>我是献超前，技术 ID 为 LeoninCS，河南大学软件工程专业本科在读，预计于 2027 年毕业。目前在上海 MiniMax Cloud Infra 系统组实习，持续参与实际工程项目与开源相关工作。</p>
-        <p>AI 重度用户，日均上亿 Token；DevOps 理念践行者，主要关注 Cloud Infra、Go 后端、Docker、Kubernetes 等云原生基础设施，并具备实际项目落地经验；</p>
-        <p>开源贡献者，维护 Sealos 合规组件，个人项目 GitHub 累计 500+ Stars；技术内容创作者，全网累计 2000+ 粉丝，1.5w+ 点赞收藏数；Web3 信徒，认同去中心化的理念。</p>
-        <p>生活中，我喜欢 骑行、摄影与 Hi-Fi，也常听 Hip Hop 和 R&amp;B。除此之外，我对投资理财也有一定兴趣，主要关注美股与加密货币，保持对技术与生活的长期探索。</p>
+        <p>我是献超前，技术 ID 为 LeoninCS，河南大学软件工程专业本科在读，预计于 2027 年毕业。曾在上海 MiniMax基础架构-效率组实习，主要负责内部资源管理平台开发与维护。</p>
+        <p>主要技术方向为 Go 后端开发、Kubernetes、AI Agent 与平台工程，具备实际项目开发与落地经验。</p>
+        <p>开源贡献者，个人项目 GitHub 累计 650+ Stars；技术内容创作者，全网累计 2.5k+ 粉丝，2.5w+ 点赞收藏数，20w+浏览量；</p>
+        <p>生活中，我喜欢 骑行、摄影与 Hi-Fi，也常听 Hip Hop 和 neo-soul R&amp;B。除此之外，我对投资理财也有一定兴趣，主要关注美股与加密货币，保持对技术与生活的长期探索。</p>
         <ul>
           <li><strong>邮箱：</strong><a href="mailto:xianchaoqian@foxmail.com">xianchaoqian@foxmail.com</a></li>
           <li><strong>GitHub：</strong><a href="https://github.com/LeoninCS">github.com/LeoninCS</a></li>
@@ -257,7 +257,17 @@
 
       <article id="seo-internship">
         <h2>实习</h2>
-        <p>2026 年 7 月至今在 MiniMax Cloud Infra 系统组实习。</p>
+        <section>
+          <h3>MiniMax基础架构-效率组</h3>
+          <p>2026.07.13 — 2026.10.13，参与内部面向模型训练的 Solar 资源管理平台开发与维护，负责 Volcano 队列的资源管理与可用性保障。</p>
+          <ul>
+            <li><strong>备机批量替换：</strong>由 Solar Controller 发现并批量聚合同队列故障节点，减少串行等待，提升多节点故障恢复效率。</li>
+            <li><strong>资源预约调整：</strong>支持任务结束或定时触发资源腾挪，减少夜间资源闲置与人工干预，提升训练资源利用率。</li>
+            <li><strong>统一资源中心：</strong>统一纳管非 K8s 机器、云主机与交换机，支持资源查询统计、归属批量调整与变更追溯；联动 Volcano 队列同步归属，为计费、监控与权限管理提供数据基础。</li>
+            <li><strong>大页内存改配编排：</strong>通过 Reconcile 机制批量提交改配任务，串联排空、迁移与异常回收，配置三重告警，支撑推理性能优化与稳定性保障。</li>
+            <li><strong>完成事件可靠投递：</strong>基于 CRD 持久化事件与发送状态，对接事件中心，并提供 event_id 支持下游幂等消费。</li>
+          </ul>
+        </section>
         <p>2026 年 3 月至 7 月在环界云计算 / Sealos 系统组实习，负责 Sealos 集群合规组件建设，包括 Admin、Path 子路径合规分析、CI/CD、多端分析插件、ProcScan 和系统维护。</p>
       </article>
 
@@ -279,9 +289,9 @@
           <a href="https://goclub.space/">GoClub 主页</a>
         </section>
         <section>
-          <h3>SDD Agent Harness</h3>
-          <p>基于 SDD 的 Agent Harness，面向 VS Code、RAG、多 Agent 编排、自动门禁和文档回写闭环。</p>
-          <a href="https://github.com/LeoninCS/SDD-Agent-Harness">SDD Agent Harness 项目仓库</a>
+          <h3>MiniCode-go</h3>
+          <p>使用 Go 从零实现的轻量级 CLI Coding Agent，支持工具调用、流式输出、会话恢复、上下文压缩与项目记忆，完成代码浏览、文件修改和测试验证闭环。</p>
+          <a href="https://github.com/LeoninCS/MiniCode-go">MiniCode-go 项目仓库</a>
         </section>
       </article>
 
@@ -302,7 +312,7 @@
       <article id="seo-hobbies">
         <h2>爱好</h2>
         <p>骑行累计 10000+ 公里，代表路线包括环太湖和环海南岛；摄影主题覆盖城市、山野、湖畔和古建。</p>
-        <p>长期关注音乐 HiFi、R&amp;B、Jazz、Hip-Hop、Pop、投资观察、商业模式、现金流、技术趋势和流动性周期。</p>
+        <p>长期关注音乐 HiFi、neo-soul R&amp;B、Jazz、Hip-Hop、Pop、投资观察、商业模式、现金流、技术趋势和流动性周期。</p>
       </article>
 
       <article id="seo-socials">

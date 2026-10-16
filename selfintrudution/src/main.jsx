@@ -11,7 +11,7 @@ const avatarImage = '/picture/lc.jpg';
 const mockMemberIcons = [
   { src: '/images/brand/go-gopher.svg', alt: 'Go 吉祥物图标' },
   { src: '/images/brand/github-mark.svg', alt: 'GitHub 图标' },
-  { src: '/images/brand/labring.png', alt: 'LabRing 图标' },
+  { src: '/images/brand/minimax.png', alt: 'MiniMax 图标' },
 ];
 
 const unsplashImage = (photoId) =>
@@ -28,16 +28,16 @@ const projects = [
     preview: ['Producer', 'Feed API', 'Redis Cache', 'MQ', 'MySQL'],
   },
   {
-    label: 'Workflow',
-    title: 'SDD Agent Harness',
-    caption: '基于 SDD 的 Agent Harness，面向 VS Code、RAG、多 Agent 编排、自动门禁和文档回写闭环。',
-    href: 'https://github.com/LeoninCS/SDD-Agent-Harness',
-    stack: ['Harness', 'RAG', 'VS Code', 'Workflow', 'Docs'],
-    highlights: ['多 Agent 编排', '自动门禁', '文档回写闭环'],
-    preview: ['Spec', 'Harness', 'RAG', 'Gate', 'Docs'],
+    label: 'Agent',
+    title: 'MiniCode-go',
+    caption: '使用 Go 从零实现的轻量级 CLI Coding Agent，支持工具调用、流式输出、会话恢复、上下文压缩与项目记忆，完成代码浏览、文件修改和测试验证闭环。',
+    href: 'https://github.com/LeoninCS/MiniCode-go',
+    stack: ['Go', 'CLI', 'Agent Loop', 'Tool Calling', 'SSE', 'Langfuse'],
+    highlights: ['工具调用与验证闭环', '会话恢复与上下文压缩', '项目记忆与执行审批'],
+    preview: ['Task', 'LLM', 'Tools', 'Verify', 'Result'],
   },
   {
-    label: 'Cloud',
+    label: 'Sealos',
     title: 'CompliK',
     caption: 'Sealos 系统组实习项目，参与集群合规系统 Admin 开发、Path 子路径合规分析、CI、多端分析插件和 ProcScan 二进制分析。',
     href: 'https://github.com/labring/CompliK',
@@ -67,9 +67,34 @@ const profileRows = [
 
 const internshipCards = [
   {
-    eyebrow: 'Cloud Infra 实习',
-    company: 'MiniMax · Cloud Infra 系统组',
-    period: '2026.07.13 — 至今',
+    eyebrow: '实习经历',
+    company: 'MiniMax基础架构-效率组',
+    period: '2026.07.13 — 2026.10.13',
+    title: 'Solar 训练资源管理平台。',
+    text: '参与 MiniMax 内部面向模型训练的 Solar 平台开发与维护，负责 Volcano 队列的资源管理与可用性保障。',
+    focus: '围绕故障恢复、资源利用率、统一纳管、改配编排与事件可靠投递完善平台能力。',
+    deliverables: [
+      {
+        title: '备机批量替换',
+        text: '由 Solar Controller 发现并批量聚合同队列故障节点，减少串行等待，提升多节点故障恢复效率。',
+      },
+      {
+        title: '资源预约调整',
+        text: '支持任务结束或定时触发资源腾挪，减少夜间资源闲置与人工干预，提升训练资源利用率。',
+      },
+      {
+        title: '统一资源中心',
+        text: '统一纳管非 K8s 机器、云主机与交换机，支持资源查询统计、归属批量调整与变更追溯；联动 Volcano 队列同步归属，为计费、监控与权限管理提供数据基础。',
+      },
+      {
+        title: '大页内存改配编排',
+        text: '通过 Reconcile 机制批量提交改配任务，串联排空、迁移与异常回收，配置三重告警，支撑推理性能优化与稳定性保障。',
+      },
+      {
+        title: '完成事件可靠投递',
+        text: '基于 CRD 持久化事件与发送状态，对接事件中心，并提供 event_id 支持下游幂等消费。',
+      },
+    ],
     brandLogo: 'https://filecdn.minimax.chat/public/969d635c-cab6-45cc-8d61-47c9fe40c81f.png',
     variant: 'minimax',
   },
@@ -160,10 +185,10 @@ const hobbyCards = [
   },
   {
     eyebrow: '音乐与 HiFi',
-    title: 'R&B、Jazz、Hip-Hop 和 Pop 是长期听感入口。',
+    title: 'neo-soul R&B、Jazz、Hip-Hop 和 Pop 是长期听感入口。',
     text: '喜欢方大同、Kendrick Lamar、SZA、Frank Ocean、J. Cole 等，也关注 FiiO KA13、Sennheiser IE 200、声场和解析。',
     visualTitle: 'Music / HiFi',
-    visualText: 'R&B / Jazz / Hip-Hop / Pop',
+    visualText: 'neo-soul R&B / Jazz / Hip-Hop / Pop',
     note: '把听感当作一种审美训练。',
     image: unsplashImage('photo-1609702847389-b8aec1b0b929'),
     imagePosition: 'center 50%',
@@ -877,7 +902,7 @@ function ResumeMockup({ compact = false }) {
           </div>
           <a className="mock-button" href={`mailto:${contactEmail}`}>查看联系方式</a>
           <small>
-            河大软件工程 → Go 后端 → Sealos 系统组 → MiniMax Cloud Infra
+            河大软件工程 → Go 后端 → Sealos 系统组 → MiniMax基础架构-效率组
           </small>
         </div>
       </section>
@@ -915,10 +940,10 @@ function About() {
   const sectionRef = useRef(null);
   const [activeLine, setActiveLine] = useState(0);
   const lines = [
-    '我是献超前，技术 ID 为 LeoninCS，河南大学软件工程专业本科在读，预计于 2027 年毕业。目前在上海 MiniMax Cloud Infra 系统组实习，持续参与实际工程项目与开源相关工作。',
-    'AI 重度用户，日均上亿 Token；DevOps 理念践行者，主要关注 Cloud Infra、Go 后端、Docker、Kubernetes 等云原生基础设施，并具备实际项目落地经验；',
-    '开源贡献者，维护 Sealos 合规组件，个人项目 GitHub 累计 500+ Stars；技术内容创作者，全网累计 2000+ 粉丝，1.5w+ 点赞收藏数；Web3 信徒，认同去中心化的理念。',
-    '生活中，我喜欢 骑行、摄影与 Hi-Fi，也常听 Hip Hop 和 R&B。除此之外，我对投资理财也有一定兴趣，主要关注美股与加密货币，保持对技术与生活的长期探索。',
+    '我是献超前，技术 ID 为 LeoninCS，河南大学软件工程专业本科在读，预计于 2027 年毕业。曾在上海 MiniMax基础架构-效率组实习，主要负责内部资源管理平台开发与维护。',
+    '主要技术方向为 Go 后端开发、Kubernetes、AI Agent 与平台工程，具备实际项目开发与落地经验。',
+    '开源贡献者，个人项目 GitHub 累计 650+ Stars；技术内容创作者，全网累计 2.5k+ 粉丝，2.5w+ 点赞收藏数，20w+浏览量；',
+    '生活中，我喜欢 骑行、摄影与 Hi-Fi，也常听 Hip Hop 和 neo-soul R&B。除此之外，我对投资理财也有一定兴趣，主要关注美股与加密货币，保持对技术与生活的长期探索。',
   ];
 
   useEffect(() => {
@@ -1012,8 +1037,8 @@ function Projects() {
             </h2>
           </div>
           <p>
-            这里集中展示 CompliK、GCFeed、SDD Agent Harness 和 GoClub，
-            对应集群合规、内容流后端、规范驱动工作流和开源知识库。
+            这里集中展示 CompliK、GCFeed、MiniCode-go 和 GoClub，
+            对应集群合规、内容流后端、CLI Coding Agent 和开源知识库。
           </p>
         </div>
 
@@ -1106,21 +1131,32 @@ function Projects() {
   );
 }
 
-function MiniMaxCloudInfraVisual({ card }) {
+function MiniMaxPlatformVisual({ card }) {
   return (
     <div className="get-visual minimax-visual">
       <div className="visual-toolbar">
         <span />
         <span />
         <span />
-        <span className="visual-tag">Cloud Infra</span>
+        <span className="visual-tag">基础架构-效率组</span>
       </div>
-      <div className="minimax-console minimax-empty-console">
-        <div className="minimax-brand-lockup">
+      <div className="minimax-console minimax-platform-console">
+        <div className="minimax-console-head">
           <span className="minimax-logo">
             <img src={card.brandLogo} alt="MiniMax 官方 Logo" loading="lazy" />
           </span>
-          <strong>Cloud Infra</strong>
+          <strong>Solar / 资源管理平台</strong>
+        </div>
+
+        <div className="minimax-milestones" aria-label="Solar 平台实习工作内容">
+          {card.deliverables.map((item, index) => (
+            <article key={item.title}>
+              <header>
+                <span><small>0{index + 1}</small>{item.title}</span>
+              </header>
+              <p>{item.text}</p>
+            </article>
+          ))}
         </div>
       </div>
     </div>
@@ -1220,7 +1256,7 @@ function StorySection({ id, eyebrow, title, mutedTitle, text, cards, stacked = t
                 {card.note && <strong>{card.note}</strong>}
               </div>
               {card.variant === 'minimax' ? (
-                <MiniMaxCloudInfraVisual card={card} />
+                <MiniMaxPlatformVisual card={card} />
               ) : card.variant === 'sealos' ? (
                 <SealosComplianceVisual card={card} />
               ) : (
@@ -1259,8 +1295,8 @@ function Internship() {
       id="internship"
       eyebrow="实习经历"
       title="实习内容落在真实系统里。"
-      mutedTitle=" MiniMax Cloud Infra 与 Sealos。"
-      text="当前在 MiniMax Cloud Infra 系统组实习；此前在 Sealos 环界云计算参与集群合规组件建设。"
+      mutedTitle=" MiniMax基础架构-效率组与 Sealos。"
+      text="在 MiniMax基础架构-效率组参与 Solar 训练资源管理平台开发与维护；此前在 Sealos 环界云计算参与集群合规组件建设。"
       cards={internshipCards}
       stacked={false}
     />
